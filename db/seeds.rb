@@ -5,3 +5,44 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+Review.destroy_all
+Album.destroy_all
+User.destroy_all
+
+
+user1 = User.create!(
+    username: "user1",
+    email: "user1@example.come",
+    password: "password123"
+)
+user2 = User.create!(
+    username: "user2",
+    email: "user2@example.com",
+    password: "password123"
+)
+
+album1 = Album.create!(
+    title: "Album1",
+    artist: "Artist1",
+    release_date: "2022-01-01"
+)
+album2 = Album.create!(
+    title: "Album2",
+    artist: "Artist2",
+    release_date: "2022-01-01"
+)
+
+Review.create!(
+    user: user1,
+    album: album1,
+    rating: 5,
+    comment: "Great album"
+)
+Review.create!(
+    user: user2,
+    album: album2,
+    rating: 3,
+    comment: "It's alright"
+)
+
+puts "Seeded!"
