@@ -1,20 +1,25 @@
 class ReviewsController < ApplicationController
     rescue_from ActiveRecord::RecordInvalid, with: :unprocessable_entity
     rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
+    
+    before_action :set_reviewable, only: [:show, :index]
 
     def index
-        reviews = Review.all
-        render json: reviews, status: :ok
+        @reviews = @reviewable.reviews
+        render json: @reviews, status: :ok
     end
 
     def show
-        review = Review.find(params[:id])
-        render json: review, status: :ok
+        @review = @reviewable.reviews.find(params[:id])
+        render json: @review, status: :ok
     end
 
     def create
+        album = Album.find(params[:album_id])
         user = User.find(params[:user_id])
-        review = user.reviews.create!(review_params)
+        review = album.reviews.new(review_params)
+        review.user = user
+        review.save!
         render json: review, status: :created
     end
 
@@ -26,8 +31,16 @@ class ReviewsController < ApplicationController
 
     private
 
+    def set_reviewable
+        @reviewable = if params[:user_id]
+            User.find(params[:user_id])
+        elsif params[:album_id]
+            Album.find(params[:album_id])
+        end
+    end
+
     def review_params
-        params.permit(:comment, :rating)
+        params.permit(:comment, :rating, :user_id, :album_id)
     end
 
     def unprocessable_entity(exception)
