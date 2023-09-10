@@ -17,7 +17,8 @@ class ReviewsController < ApplicationController
     def create
         album = Album.find(params[:album_id])
         user = User.find(params[:user_id])
-        review = album.reviews.new(review_params)
+        review = Review.new(review_params)
+        review.album = album
         review.user = user
         review.save!
         render json: review, status: :created
@@ -32,7 +33,8 @@ class ReviewsController < ApplicationController
     private
 
     def set_reviewable
-        @reviewable = if params[:user_id]
+        @reviewable = 
+        if params[:user_id]
             User.find(params[:user_id])
         elsif params[:album_id]
             Album.find(params[:album_id])
@@ -40,7 +42,7 @@ class ReviewsController < ApplicationController
     end
 
     def review_params
-        params.permit(:comment, :rating, :user_id, :album_id)
+        params.permit(:comment, :rating)
     end
 
     def unprocessable_entity(exception)
