@@ -33,8 +33,7 @@ class ReviewsController < ApplicationController
     private
 
     def set_reviewable
-        @reviewable = 
-        if params[:user_id]
+        @reviewable = if params[:user_id]
             User.find(params[:user_id])
         elsif params[:album_id]
             Album.find(params[:album_id])
