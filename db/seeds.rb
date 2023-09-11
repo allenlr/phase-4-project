@@ -24,12 +24,14 @@ user2 = User.create!(
 album1 = Album.create!(
     title: "Album1",
     artist: "Artist1",
-    release_date: "2022-01-01"
+    release_date: "2022-01-01",
+    image_url: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FKid_A&psig=AOvVaw1WTjcNx_bxNT8tJE4YUAAP&ust=1694500774289000&source=images&cd=vfe&opi=89978449&ved=0CA8QjRxqFwoTCLjHq9z5oYEDFQAAAAAdAAAAABAD"
 )
 album2 = Album.create!(
     title: "Album2",
     artist: "Artist2",
-    release_date: "2022-01-01"
+    release_date: "2022-01-01",
+    image_url: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fpitchfork.com%2Freviews%2Falbums%2F10785-in-rainbows%2F&psig=AOvVaw0jN5YCCVWOkm0rHXnvnuNB&ust=1694500866244000&source=images&cd=vfe&opi=89978449&ved=0CA8QjRxqFwoTCODq7-X5oYEDFQAAAAAdAAAAABAD"
 )
 
 Review.create!(
