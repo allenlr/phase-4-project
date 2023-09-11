@@ -7,6 +7,7 @@ import Albums from './Albums';
 import Login from './Login';
 import Register from './Register';
 import NotFound from './NotFound';
+import { AlbumProvider } from './context/AlbumContext';
 
 
 function App() {
@@ -15,7 +16,9 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/albums" element={<Albums />} />
+        <AlbumProvider>
+          <Route path="/albums" element={<Albums />} />
+        </AlbumProvider>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="*" element={<NotFound />} />
