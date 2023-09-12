@@ -1,7 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import UserContext from './context/UserContext';
 
 function Navbar(){
+
+    const { user, setUser } = useContext(UserContext)
+
+    function handleLogout() {
+        fetch("/logout", {
+            method: "DELETE",
+        }).then(() => setUser(undefined));
+    }
+
     return(
         <nav className="navbar">
             <Link to="/" className="navbar-brand">
@@ -17,6 +27,7 @@ function Navbar(){
                 <Link to="/register" className="nav-link">
                     Register
                 </Link>
+                {user ? <button onClick={handleLogout}>Logout</button> : null}
             </div>
 
         </nav>

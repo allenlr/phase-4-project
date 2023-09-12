@@ -1,18 +1,23 @@
 import React, { useContext, useState, useEffect } from 'react';
 import UserContext from './context/UserContext';
 
-function Login({ onLogin }){
+function Login(){
 
-    const {user, setUser } = useContext(UserContext)
-    const [password, setPassword] = useState("")
+    const {user, setUser } = useContext(UserContext);
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     
     useEffect(() => {
-        fetch("/me").then((response) => {
-            if (response.ok) {
-                response.json().then((user) => setUser(user));
+        fetch("/me").then((r) => {
+            if (r.ok) {
+                return r.json();
+            } else {
+                return r.json().then((data) => Promise.reject(data));
             }
-        });
+        })
+        .then((user) => setUser(user))
+        .catch((error) => console.error('Error', error));
     }, [])
 
     function handleSubmit(e) {
@@ -22,13 +27,13 @@ function Login({ onLogin }){
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ user, password }),
+            body: JSON.stringify({ username, password }),
         })
             .then((r) => r.json())
-            .then((user) => onLogin(user));
+            .then((user) => setUser(user));
     }
 
-    if(user) {
+    if(user?.username) {
         return <h2>Welcome, {user.username}!</h2>
     } else {
         return(
@@ -36,12 +41,12 @@ function Login({ onLogin }){
                 Login
                 <br/>
                 <br/>
-                <form>
+                <form onSubmit={handleSubmit}>
                     username
                     <input
                         type="text"
-                        value={user}
-                        onChange={(e) => setUser(e.target.value)}
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
                     />
                     <br/>
                     password
