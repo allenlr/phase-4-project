@@ -21,13 +21,16 @@ function Navbar(){
                 <Link to="/albums" className="nav-link">
                     Albums
                 </Link>
-                <Link to="/login" className="nav-link">
-                    Login
-                </Link>
                 <Link to="/register" className="nav-link">
                     Register
                 </Link>
-                {user ? <button onClick={handleLogout}>Logout</button> : null}
+                {user ? 
+                    <button onClick={handleLogout}>Logout</button> 
+                    : 
+                    <Link to="/login" className="nav-link">
+                    Login
+                    </Link>
+                }
             </div>
 
         </nav>

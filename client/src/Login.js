@@ -32,6 +32,7 @@ function Login(){
             .then((r) => r.json())
             .then((user) => setUser(user));
     }
+    console.log(user)
 
     if(user?.username) {
         return <h2>Welcome, {user.username}!</h2>
