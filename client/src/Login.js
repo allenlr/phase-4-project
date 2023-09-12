@@ -43,20 +43,22 @@ function Login(){
                 <br/>
                 <br/>
                 <form onSubmit={handleSubmit}>
-                    username
+                    username: 
                     <input
+                        style={{marginLeft: "5px"}}
                         type="text"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                     />
                     <br/>
-                    password
+                    password:
                     <input
+                        style={{marginLeft: "6px"}}
                         type={showPassword ? "text" : "password"}
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
-                    <button type="button" onClick={() => setShowPassword((prev) => !prev)}>
+                    <button style={{fontSize: "10px", marginLeft: "5px"}} type="button" onClick={() => setShowPassword((prev) => !prev)}>
                         {showPassword ? "🚫👁️" : "👁️"}
                     </button>
                     <br/>
