@@ -1,0 +1,26 @@
+.container{
+    display: flex;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 300px;
+    flex-direction: column;
+    align-items: center;
+}
+
+.image {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    margin-bottom: 5px;
+}
+
+.details {
+    text-align: left;
+}
+
+.details div {
+    margin-bottom: 50px;
+}
