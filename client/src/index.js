@@ -4,12 +4,15 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { AlbumProvider } from './context/AlbumContext';
+import { UserProvider } from './context/UserContext';
 
 ReactDOM.render(
   <React.StrictMode>
-    <AlbumProvider>
-      <App />
-    </AlbumProvider>
+    <UserProvider>
+      <AlbumProvider>
+        <App />
+      </AlbumProvider>
+    </UserProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

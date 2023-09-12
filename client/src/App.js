@@ -14,6 +14,7 @@ function App() {
   return (
     <Router>
       <Navbar />
+      <button>click</button>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/albums" element={<Albums />} />

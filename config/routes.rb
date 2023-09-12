@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   resources :albums, except: [:new, :edit] do
     resources :reviews, only: [:create, :index, :destroy, :update]
   end
+  
+  post "/login", to: "sessions#create"
   get "*path", to: "fallback#index", constraints: ->(req) { !req.xhr? && req.format.html? }
 
 end
