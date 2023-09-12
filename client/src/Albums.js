@@ -23,7 +23,9 @@ function Albums(){
         <div>
             <br/>
             <br/>
-            Albums
+            <div style={{marginLeft: "12px"}}>
+                Albums
+            </div>
             {albums?.length > 0 ? albums.map(album => (
                 <Album key={album.id} album={album} />
             )) : <p>Loading...</p>}

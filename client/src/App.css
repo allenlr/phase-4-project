@@ -28,3 +28,14 @@ body {
 .nav-link:hover {
   color: #fce086;
 }
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.navbar-nav {
+  display: flex;
+  gap: 20px;
+}
