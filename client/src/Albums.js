@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import AlbumContext from './context/AlbumContext';
+import Album from './Album';
 
 function Albums(){
 
@@ -24,7 +25,7 @@ function Albums(){
             <br/>
             Albums
             {albums?.length > 0 ? albums.map(album => (
-                <div key={album.id}>{album.title}</div>
+                <Album key={album.id} album={album} />
             )) : <p>Loading...</p>}
         </div>
     )
