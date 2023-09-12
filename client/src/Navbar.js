@@ -4,12 +4,20 @@ import UserContext from './context/UserContext';
 
 function Navbar(){
 
-    const { user, setUser } = useContext(UserContext)
+    const { user, setUser } = useContext(UserContext);
 
     function handleLogout() {
         fetch("/logout", {
             method: "DELETE",
-        }).then(() => setUser(undefined));
+        })
+        .then((r) => {
+            if (r.ok) {
+                setUser(undefined);
+            } else {
+                console.error('Failed to logout');
+            }
+        })
+        .catch((error) => console.error('Error:', error));
     }
 
     return(

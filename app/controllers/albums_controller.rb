@@ -27,7 +27,7 @@ class AlbumsController < ApplicationController
     private
 
     def album_params
-        params.permit(:rating, :title, :artist, :release_date)
+        params.permit(:title, :artist, :release_date)
     end
 
     def record_not_found(exception)

@@ -17,10 +17,13 @@ function Albums(){
         };
         fetchAlbums();
     }, [setAlbums])
+
     return(
         <div>
+            <br/>
+            <br/>
             Albums
-            {albums.length > 0 ? albums.map(album => (
+            {albums?.length > 0 ? albums.map(album => (
                 <div key={album.id}>{album.title}</div>
             )) : <p>Loading...</p>}
         </div>
