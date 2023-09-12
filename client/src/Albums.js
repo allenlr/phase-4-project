@@ -8,7 +8,7 @@ function Albums(){
     useEffect(() => {
         const fetchAlbums = async () => {
             try {
-                const response = await fetch('http://localhost:3000/albums');
+                const response = await fetch('/albums');
                 const data = await response.json();
                 setAlbums(data);
             } catch (error) {
@@ -20,7 +20,7 @@ function Albums(){
     return(
         <div>
             Albums
-            {albums ? albums.map(album => (
+            {albums.length > 0 ? albums.map(album => (
                 <div key={album.id}>{album.title}</div>
             )) : <p>Loading...</p>}
         </div>
