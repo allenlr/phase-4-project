@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   
   post "/login", to: "api/v1/auth#create"
   get "/auth", to: "users#show"
+  post "/register", to: "users#create"
 
   get "*path", to: "fallback#index", constraints: ->(req) { !req.xhr? && req.format.html? }
 

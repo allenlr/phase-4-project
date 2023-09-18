@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::API
+  require 'jwt'
   include ActionController::Cookies
   before_action :authorized
 

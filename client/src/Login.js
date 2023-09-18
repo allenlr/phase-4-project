@@ -15,13 +15,20 @@ function Login(){
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ username, password }),
-            credentials: 'include',
+            body: JSON.stringify({ user: { username, password }}),
         })
             .then((r) => r.json())
-            .then((user) => setCurrentUser(user));
+            .then((data) => {
+                if (data.jwt) {
+                    console.log(data)
+                    localStorage.setItem("token", data.jwt);
+                    setCurrentUser(data.user);
+                } else {
+                    console.log(data)
+                    console.error(data.error);
+                }
+            });
     }
-    // console.log(currentUser)
 
     if(currentUser?.username) {
         return <h2>Welcome, {currentUser.username}!</h2>

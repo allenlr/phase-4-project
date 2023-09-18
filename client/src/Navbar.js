@@ -7,17 +7,8 @@ function Navbar(){
     const { currentUser, setCurrentUser } = useContext(UserContext);
 
     function handleLogout() {
-        fetch("/logout", {
-            method: "DELETE",
-        })
-        .then((r) => {
-            if (r.ok) {
-                setCurrentUser(undefined);
-            } else {
-                console.error('Failed to logout');
-            }
-        })
-        .catch((error) => console.error('Error:', error));
+        localStorage.removeItem("token");
+        setCurrentUser(null);
     }
 
     return(
@@ -33,7 +24,7 @@ function Navbar(){
                     Register
                 </Link>
                 {currentUser ? 
-                    <button onClick={handleLogout}>Logout</button> 
+                    <p onClick={handleLogout}>Logout</p> 
                     : 
                     <Link to="/login" className="nav-link">
                     Login
