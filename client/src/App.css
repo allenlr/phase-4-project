@@ -39,3 +39,7 @@ body {
   display: flex;
   gap: 20px;
 }
+
+.register-div{
+  display: center;
+}

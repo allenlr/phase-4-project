@@ -16,6 +16,12 @@ class DocumentsController < ApplicationController
         render json: document, status: :created
     end
 
+    def destroy
+        document = Document.find(params[:id])
+        document.destroy
+        head :no_content
+    end
+
     private
 
     def authorize

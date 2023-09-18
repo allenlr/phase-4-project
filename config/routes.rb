@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   resources :albums, except: [:new, :edit] do
     resources :reviews, only: [:create, :index, :destroy, :update]
   end
+
+  resources :documents, only: [:show, :index, :create, :destroy]
   
   post "/login", to: "sessions#create"
   get "/me", to: "users#show"
