@@ -1,14 +1,9 @@
 import React, { useState } from 'react'
 import './Album.css';
+import Reviews from './Reviews'
 
 const Album = ({ album }) => {
     const [showReviews, setShowReviews] = useState(false)
-    console.log(album.reviews)
-
-    const getStars = (rating) => {
-        return '⭐'.repeat(rating);
-    };
-
 
     return (
         <div>
@@ -27,9 +22,7 @@ const Album = ({ album }) => {
             </div>
             {showReviews ? album.reviews.map((review) => {
                 return (
-                    <div key={review.id} className="review-div">
-                        <p>{review.user_name}: {review.comment} {getStars(review.rating)}</p>
-                    </div>
+                        <Reviews key={review.id} review={review}/>
                 )
             }) : null}
         </div>
