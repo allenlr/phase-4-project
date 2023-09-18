@@ -2,7 +2,7 @@ class ApplicationController < ActionController::API
   include ActionController::Cookies
   before_action :authorized
 
-  def encode_toke(payload)
+  def encode_token(payload)
     JWT.encode(payload, Rails.application.credentials.jwt_secret)
   end
 
@@ -22,6 +22,7 @@ class ApplicationController < ActionController::API
       user_id = decoded_token[0]['user_id']
       @user = User.find_by(id: user_id)
     end
+    @user
   end
 
   def logged_in?
