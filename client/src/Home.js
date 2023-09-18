@@ -7,7 +7,9 @@ function Home(){
     const { currentUser, setCurrentUser } = useContext(UserContext)
 
     useEffect(() => {
-        fetch('/auth')
+        fetch('/auth', {
+            credentials: 'include',
+        })
             .then(res => {
                 if(res.ok) {
                     res.json().then(user => setCurrentUser(user))
@@ -18,7 +20,7 @@ function Home(){
     if(!currentUser) return <Login />
     return(
         <div>
-            Welcome {currentUser?.user_name}
+            Welcome {currentUser?.username}
         </div>
     )
 }

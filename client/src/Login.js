@@ -16,6 +16,7 @@ function Login(){
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({ username, password }),
+            credentials: 'include',
         })
             .then((r) => r.json())
             .then((user) => setCurrentUser(user));

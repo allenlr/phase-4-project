@@ -5,6 +5,7 @@ import UserContext from './context/UserContext';
 function Register(){
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const [email, setEmail] = useState('');
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const { user, setUser } = useContext(UserContext)
@@ -18,6 +19,7 @@ function Register(){
         const user = {
             username,
             password,
+            email,
         };
 
         fetch(`/users`, {
@@ -60,6 +62,12 @@ function Register(){
                     <label>
                         Password:
                         <input style={{marginLeft:"10px"}} type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        Email:
+                        <input style={{marginLeft:"10px"}} type="text" value={password} onChange={(e) => setEmail(e.target.value)} required />
                     </label>
                 </div>
                 <button id="register-button" type="submit" disabled={loading}>
