@@ -59,11 +59,11 @@ function Register(){
                 <div>
                     <label>
                         Password:
-                        <input style={{marginLeft:"5px"}} type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                        <input style={{marginLeft:"10px"}} type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                     </label>
                 </div>
-                <button type="submit" disabled={loading}>
-                    {loading ? 'Registering...' : 'Register'}
+                <button id="register-button" type="submit" disabled={loading}>
+                    {loading ? 'Registering...' : 'Sign Up'}
                 </button>
             </form>
         </div>

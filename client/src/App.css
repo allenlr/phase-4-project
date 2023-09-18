@@ -41,5 +41,34 @@ body {
 }
 
 .register-div{
-  display: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #000;
+  margin-top: -190px;
 }
+
+#register-button{
+  width: 257px;
+  color: #000000;
+  background-color: #008BFF;
+  border: none;
+  padding: 10px 10px;
+  border-radius: 4px;
+  cursor: hand;
+  font-size: 15px;
+  transition: background-color 0.3s;
+  margin-top: 5px;
+}
+
+#register-button:hover {
+  background-color: #0056a3; 
+}
+
+#register-button:disabled {
+  background-color: #b3c7dc;
+  cursor: not-allowed;
+}
+
