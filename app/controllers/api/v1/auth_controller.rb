@@ -12,11 +12,6 @@ class Api::V1::AuthController < ApplicationController
         end
     end
 
-    def destroy
-        session.delete :user_id
-        head :no_content
-    end
-
     private
 
     def user_login_params
