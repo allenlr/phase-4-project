@@ -9,7 +9,9 @@ import Register from './Register';
 import NotFound from './NotFound';
 
 
+
 function App() {
+  
   return (
     <Router>
       <Navbar />

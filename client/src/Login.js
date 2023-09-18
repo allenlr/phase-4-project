@@ -1,24 +1,12 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import UserContext from './context/UserContext';
 
 function Login(){
 
-    const {user, setUser } = useContext(UserContext);
+    const {currentUser, setCurrentUser} = useContext(UserContext);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
-    
-    useEffect(() => {
-        fetch("/me").then((r) => {
-            if (r.ok) {
-                return r.json();
-            } else {
-                return r.json().then((data) => Promise.reject(data));
-            }
-        })
-        .then((user) => setUser(user))
-        .catch((error) => console.error('Error', error));
-    }, [])
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -30,12 +18,12 @@ function Login(){
             body: JSON.stringify({ username, password }),
         })
             .then((r) => r.json())
-            .then((user) => setUser(user));
+            .then((user) => setCurrentUser(user));
     }
-    console.log(user)
+    // console.log(currentUser)
 
-    if(user?.username) {
-        return <h2>Welcome, {user.username}!</h2>
+    if(currentUser?.username) {
+        return <h2>Welcome, {currentUser.username}!</h2>
     } else {
         return(
             <div>

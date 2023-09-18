@@ -1,5 +1,5 @@
 class DocumentsController < ApplicationController
-    before_action :authorize
+    before_action :authorized
 
     def show
         document = Document.find(params[:id])
@@ -22,9 +22,4 @@ class DocumentsController < ApplicationController
         head :no_content
     end
 
-    private
-
-    def authorize
-        return render json: { error: "Not authorized" }, status: :unauthorized unless session.include? :user_id
-    end
 end

@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   resources :documents, only: [:show, :index, :create, :destroy]
   
   post "/login", to: "sessions#create"
-  get "/me", to: "users#show"
+  get "/auth", to: "users#show"
   delete "/logout", to: "sessions#destroy"
 
   get "*path", to: "fallback#index", constraints: ->(req) { !req.xhr? && req.format.html? }

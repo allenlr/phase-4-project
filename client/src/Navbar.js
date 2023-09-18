@@ -4,7 +4,7 @@ import UserContext from './context/UserContext';
 
 function Navbar(){
 
-    const { user, setUser } = useContext(UserContext);
+    const { currentUser, setCurrentUser } = useContext(UserContext);
 
     function handleLogout() {
         fetch("/logout", {
@@ -12,7 +12,7 @@ function Navbar(){
         })
         .then((r) => {
             if (r.ok) {
-                setUser(undefined);
+                setCurrentUser(undefined);
             } else {
                 console.error('Failed to logout');
             }
@@ -32,7 +32,7 @@ function Navbar(){
                 <Link to="/register" className="nav-link">
                     Register
                 </Link>
-                {user ? 
+                {currentUser ? 
                     <button onClick={handleLogout}>Logout</button> 
                     : 
                     <Link to="/login" className="nav-link">

@@ -1,13 +1,24 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import UserContext from './context/UserContext';
+import Login from './Login'
 
 
 function Home(){
-    const user = useContext(UserContext).user
-    console.log(user)
+    const { currentUser, setCurrentUser } = useContext(UserContext)
+
+    useEffect(() => {
+        fetch('/auth')
+            .then(res => {
+                if(res.ok) {
+                    res.json().then(user => setCurrentUser(user))
+                }
+            })
+    }, [])
+    
+    if(!currentUser) return <Login />
     return(
         <div>
-            Welcome {user?.user_name}
+            Welcome {currentUser?.user_name}
         </div>
     )
 }

@@ -15,7 +15,7 @@ function Reviews({ review }){
     return(
         <div className="review-div">
             <p>{review?.user_name}: {review?.comment} {getStars(review?.rating)}</p>
-            {review?.user_name == user?.user_name ? <p className="edit-comment">Edit</p> : null}
+            {review?.user_name === user?.user_name ? <p className="edit-comment">Edit</p> : null}
         </div>
     )
 }
