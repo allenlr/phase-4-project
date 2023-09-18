@@ -72,3 +72,15 @@ body {
   cursor: not-allowed;
 }
 
+#logout-button {
+  width: 70px;
+  height: 30px;
+  color: #000000;
+  background-color: #00e1ff;
+  border: none;
+  /* padding: 10px 10px; */
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 15px;
+}
+

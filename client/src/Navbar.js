@@ -24,7 +24,7 @@ function Navbar(){
                     Register
                 </Link>
                 {currentUser ? 
-                    <p onClick={handleLogout}>Logout</p> 
+                    <button id="logout-button" onClick={handleLogout}>Logout</button> 
                     : 
                     <Link to="/login" className="nav-link">
                     Login
