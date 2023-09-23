@@ -9,7 +9,7 @@ function Home(){
     else{
         return(
             <div>
-                Welcome {currentUser?.user.username}
+                Welcome {currentUser?.user.username}!
             </div>
         )
     }

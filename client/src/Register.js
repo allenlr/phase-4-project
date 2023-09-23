@@ -8,7 +8,8 @@ function Register(){
     const [email, setEmail] = useState('');
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
-    const { user, setUser } = useContext(UserContext)
+    const { currentUser, setCurrentUser } = useContext(UserContext)
+    const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
 
     function onSubmit(e){
@@ -30,8 +31,8 @@ function Register(){
         .then(res => {
             if(res.ok){
                 res.json().then((user) =>  {
-                    setUser(user);
-                    navigate.push('/');
+                    setCurrentUser(user);
+                    navigate('/');
                 })
             } else {
                 res.json().then((data) => {
@@ -47,10 +48,12 @@ function Register(){
         })
     }
 
+    console.log(error)
+
     return(
         <div className="register-div">
             <h2>Register</h2>
-            {/* {error && <div style={{ color: 'red' }}>{error}</div>} */}
+            {error && <div style={{ color: 'red' }}>{error}</div>}
             <form onSubmit={onSubmit}>
                 <div>
                     <label>
@@ -61,8 +64,11 @@ function Register(){
                 <div>
                     <label>
                         Password:
-                        <input style={{marginLeft:"10px"}} type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                        <input style={{marginLeft:"10px"}} type={showPassword ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)} required />
                     </label>
+                    <button style={{fontSize: "10px", marginLeft: "5px"}} type="button" onClick={() => setShowPassword((prev) => !prev)}>
+                        {showPassword ? "🚫👁️" : "👁️"}
+                    </button>
                 </div>
                 <div>
                     <label>
