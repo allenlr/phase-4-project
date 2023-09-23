@@ -5,11 +5,11 @@ import UserContext from './context/UserContext';
 function Home(){
     const { currentUser, isLoading } = useContext(UserContext)
     
-    if(isLoading || currentUser === undefined) return <div>Loading...</div>
+    if(isLoading) return <div>Loading...</div>
     else{
         return(
             <div>
-                Welcome {currentUser?.user.username}!
+                {currentUser ? `Welcome, ${currentUser?.user.username}!` : "Welcome!"}
             </div>
         )
     }
