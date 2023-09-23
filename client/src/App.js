@@ -15,7 +15,6 @@ function App() {
   
 
   const { currentUser, setCurrentUser, isLoading, setIsLoading } = useContext(UserContext);
-  console.log(currentUser)
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -38,7 +37,6 @@ function App() {
     }
   }, [])
 
-  console.log(currentUser)
   console.log(localStorage.getItem("token"))
   
   return (
