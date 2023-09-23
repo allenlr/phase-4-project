@@ -25,9 +25,18 @@ function App() {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then((r) => r.json())
+      .then((r) => {
+        if (!r.ok) {
+          throw new Error("Token validation failed");
+        }
+        return r.json();
+      })
       .then((user) => {
         setCurrentUser(user);
+      })
+      .catch((error) => {
+        console.error("Error authentication:", error);
+        localStorage.removeItem("token");
       })
       .finally(() => {
         setIsLoading(false);
@@ -35,7 +44,7 @@ function App() {
     } else {
       setIsLoading(false);
     }
-  }, [])
+  }, []);
 
   console.log(localStorage.getItem("token"))
   

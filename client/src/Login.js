@@ -4,6 +4,7 @@ import UserContext from './context/UserContext';
 function Login(){
 
     const {currentUser, setCurrentUser} = useContext(UserContext);
+    const [error, setError] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
@@ -20,15 +21,17 @@ function Login(){
             .then((r) => r.json())
             .then((data) => {
                 if (data.jwt) {
-                    console.log(data)
                     localStorage.setItem("token", data.jwt);
                     setCurrentUser(data.user);
+                    setError("");
                 } else {
                     console.log(data)
-                    console.error(data.error);
+                    setError(data.error);
                 }
             });
     }
+
+    console.log(error)
 
     if(currentUser?.username) {
         return <h2>Welcome, {currentUser.username}!</h2>
@@ -59,6 +62,7 @@ function Login(){
                     </button>
                     <br/>
                     <button type="submit">Login</button>
+                    {error ? <p style={{color: "red"}}>{error}</p> : null}
                 </form>
             </div>
         )
