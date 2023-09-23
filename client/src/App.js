@@ -12,8 +12,10 @@ import UserContext from './context/UserContext';
 
 
 function App() {
+  
 
-  const { currentUser, setCurrentUser } = useContext(UserContext);
+  const { currentUser, setCurrentUser, isLoading, setIsLoading } = useContext(UserContext);
+  console.log(currentUser)
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -28,8 +30,16 @@ function App() {
       .then((user) => {
         setCurrentUser(user);
       })
+      .finally(() => {
+        setIsLoading(false);
+      })
+    } else {
+      setIsLoading(false);
     }
   }, [])
+
+  console.log(currentUser)
+  console.log(localStorage.getItem("token"))
   
   return (
     <Router>

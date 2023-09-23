@@ -67,7 +67,7 @@ function Register(){
                 <div>
                     <label>
                         Email:
-                        <input style={{marginLeft:"10px"}} type="text" value={password} onChange={(e) => setEmail(e.target.value)} required />
+                        <input style={{marginLeft:"38.5px"}} type="text" value={password} onChange={(e) => setEmail(e.target.value)} required />
                     </label>
                 </div>
                 <button id="register-button" type="submit" disabled={loading}>

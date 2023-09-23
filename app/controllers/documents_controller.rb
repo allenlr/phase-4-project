@@ -3,7 +3,7 @@ class DocumentsController < ApplicationController
 
     def show
         document = Document.find(params[:id])
-        render sjon: document
+        render json: document
     end
 
     def index

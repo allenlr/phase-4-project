@@ -4,9 +4,10 @@ import UserContext from './context/UserContext';
 
 function Reviews({ review }){
 
-    const user = useContext(UserContext).user
-    console.log(`user's username: ${user?.user_name}`)
+    const currentUser = useContext(UserContext).currentUser
+    console.log(`user's username: ${currentUser?.username}`)
     console.log(`review's username: ${review?.user_name}`)
+
 
     const getStars = (rating) => {
         return '⭐'.repeat(rating);
@@ -15,7 +16,7 @@ function Reviews({ review }){
     return(
         <div className="review-div">
             <p>{review?.user_name}: {review?.comment} {getStars(review?.rating)}</p>
-            {review?.user_name === user?.user_name ? <p className="edit-comment">Edit</p> : null}
+            {review?.user_name === currentUser?.username ? <p className="edit-comment">Edit</p> : null}
         </div>
     )
 }

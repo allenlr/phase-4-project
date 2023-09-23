@@ -4,20 +4,10 @@ import Login from './Login'
 
 
 function Home(){
-    const { currentUser, setCurrentUser } = useContext(UserContext)
-
-    useEffect(() => {
-        fetch('/auth', {
-            credentials: 'include',
-        })
-            .then(res => {
-                if(res.ok) {
-                    res.json().then(user => setCurrentUser(user))
-                }
-            })
-    }, [])
+    const { currentUser, isLoading } = useContext(UserContext)
     
-    if(!currentUser) return <Login />
+    if(isLoading) return <div>Loading...</div>
+    // if(!currentUser) return <Login />
     return(
         <div>
             Welcome {currentUser?.username}
