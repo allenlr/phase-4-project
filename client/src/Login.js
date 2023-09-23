@@ -31,8 +31,6 @@ function Login(){
             });
     }
 
-    console.log(error)
-
     if(currentUser?.username) {
         return <h2>Welcome, {currentUser.username}!</h2>
     } else {

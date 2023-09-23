@@ -20,9 +20,9 @@ function Navbar(){
                 <Link to="/albums" className="nav-link">
                     Albums
                 </Link>
-                <Link to="/register" className="nav-link">
+                {!currentUser ? <Link to="/register" className="nav-link">
                     Register
-                </Link>
+                </Link> : null}
                 {currentUser ? 
                     <button id="logout-button" onClick={handleLogout}>Logout</button> 
                     : 
