@@ -14,6 +14,15 @@ class ReviewsController < ApplicationController
         render json: @review, status: :ok
     end
 
+    def update
+        review = Review.find(params[:id])
+        if review.user_id != current_user.id
+            return render json: { error: "Not authorized to update this review" }, status: :unauthorized
+        end
+        review.update(review_params)
+        render json: review, status: :ok
+    end
+
     def create
         album = Album.find(params[:album_id])
         user = User.find(params[:user_id])

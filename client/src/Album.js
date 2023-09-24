@@ -4,6 +4,9 @@ import Reviews from './Reviews'
 
 const Album = ({ album }) => {
     const [showReviews, setShowReviews] = useState(false)
+    const [reviews, setReviews] = useState(album.reviews)
+
+    
 
     return (
         <div>

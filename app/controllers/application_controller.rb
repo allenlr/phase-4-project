@@ -1,10 +1,16 @@
 class ApplicationController < ActionController::API
   require 'jwt'
   include ActionController::Cookies
+
   before_action :authorized
+  
+  rescue_from CustomError do |exception|
+    render json: { error: exception.message }, status: :unauthorized
+  end
 
   def encode_token(payload)
-    JWT.encode(payload, Rails.application.credentials.jwt_secret)
+    expiration = 24.hours.from_now.to_i
+    JWT.encode(payload.merge(exp: expiration), Rails.application.credentials.jwt_secret)
   end
 
   def decoded_token
@@ -12,8 +18,10 @@ class ApplicationController < ActionController::API
       token = authorization_header.split(' ')[1]
       begin
         JWT.decode(token, Rails.application.credentials.jwt_secret, true, algorithm: 'HS256')
+      rescue JWT::ExpiredSignature
+        raise CustomError.new("User token expired. Please log in again.")
       rescue JWT::DecodeError
-        nil
+        raise CustomError.new("Token is invalid, Authorization failed.")
       end
     end
   end
@@ -32,7 +40,7 @@ class ApplicationController < ActionController::API
 
 
   def authorized
-    return render json:{error: "Not Authorized"}, status: :unauthorized unless logged_in?
+    raise CustomError.new("Not Authorized") unless logged_in?
   end
 
   private
