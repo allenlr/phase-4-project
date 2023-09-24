@@ -6,7 +6,11 @@ const Album = ({ album }) => {
     const [showReviews, setShowReviews] = useState(false)
     const [reviews, setReviews] = useState(album.reviews)
 
-    
+    function handleUpdatedReview(updatedReview){
+        setReviews((prevReviews) =>
+            prevReviews.map((review) => review.id === updatedReview.id ? updatedReview : review)
+        )
+    }
 
     return (
         <div>
@@ -23,9 +27,9 @@ const Album = ({ album }) => {
                     <p><strong>Release Date: </strong>{album.release_date}</p>
                 </div>
             </div>
-            {showReviews ? album.reviews.map((review) => {
+            {showReviews ? reviews.map((review) => {
                 return (
-                        <Reviews key={review.id} review={review}/>
+                        <Reviews key={review.id} review={review} onUpdate={handleUpdatedReview} />
                 )
             }) : null}
         </div>

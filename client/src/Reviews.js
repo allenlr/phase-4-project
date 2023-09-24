@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import "./Album.css"
 import UserContext from './context/UserContext';
 
-function Reviews({ review }){
+function Reviews({ review, onUpdate }){
 
     const currentUser = useContext(UserContext).currentUser
     const [editing, setEditing] = useState(false)
@@ -36,6 +36,7 @@ function Reviews({ review }){
         })
         .then((updatedReview) => {
             setComment(updatedReview.comment);
+            onUpdate(updatedReview);
             setEditing(false)
         })
         .catch((error) => {
