@@ -2,7 +2,12 @@ class UsersController < ApplicationController
     rescue_from ActiveRecord::RecordInvalid, with: :unprocessable_entity
     rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
-    skip_before_action :authorized, only: [:create]
+    skip_before_action :authorized, only: [:create, :index]
+
+    def index
+        users = User.all
+        render json: users, status: :ok
+    end
 
     def create
         @user = User.create(user_params)

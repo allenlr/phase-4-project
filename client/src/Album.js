@@ -32,6 +32,9 @@ const Album = ({ album }) => {
                         <Reviews key={review.id} review={review} onUpdate={handleUpdatedReview} />
                 )
             }) : null}
+            <div>
+                <button id="write-review-button">Write Review</button>
+            </div>
         </div>
     )
 }
