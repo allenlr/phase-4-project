@@ -5,8 +5,10 @@ import UserContext from './context/UserContext';
 function Reviews({ review, onUpdate }){
 
     const currentUser = useContext(UserContext).currentUser
+
     const [editing, setEditing] = useState(false)
     const [comment, setComment] = useState(review?.comment)
+    const [rating, setRating] = useState(review?.rating)
     const [error, setError] = useState("")
 
     function handleEdit(){
@@ -26,7 +28,7 @@ function Reviews({ review, onUpdate }){
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${token}`
             },
-            body: JSON.stringify({ comment: comment })
+            body: JSON.stringify({ comment: comment, rating: rating })
         })
         .then((r) => {
             if (!r.ok) {
@@ -54,13 +56,30 @@ function Reviews({ review, onUpdate }){
         return '⭐'.repeat(rating);
     };
 
+    const handleStarClick = (selectedRating) => {
+        setRating(selectedRating);
+    }
+
+    const renderStars = () => {
+        let stars = [];
+        for (let i = 1; i <= 5; i++) {
+            if (i <= rating) {
+                stars.push(<span key={i} onClick={() => handleStarClick(i)}>⭐</span>);
+            } else {
+                stars.push(<span key={i} onClick={() => handleStarClick(i)}>☆</span>);
+            }
+        }
+        return stars;
+    }
+
     return(
         <div className="review-div">
             <p>{review?.user_name}: {review?.comment} {getStars(review?.rating)}</p>
             {review?.user_name === currentUser?.user.username ? <span onClick={handleEdit} className="edit-comment">Edit <i class="fa fa-pencil"></i></span> : null}
             {editing ? 
             <>
-            <textarea onChange={handleCommentChange} value={comment}> </textarea> 
+            <textarea id="comment-edit-box" onChange={handleCommentChange} value={comment}> </textarea>
+            {renderStars()}
             {error ? <span style={{color: "red"}}>{error}</span> : null}
             <button onClick={handleSave}>Save</button>
             <button onClick={handleCancel}>Cancel</button>

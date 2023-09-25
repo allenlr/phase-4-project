@@ -40,3 +40,10 @@
     cursor: pointer;
 }
 
+#edit-comment-box{
+    width: 400px;
+    height: 200px;
+    resize: vertical;
+}
+
+
