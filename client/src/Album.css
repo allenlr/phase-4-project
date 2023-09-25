@@ -60,6 +60,22 @@
 
 #write-review-button:hover {
     background-color: #0672cf; 
-  }
+}
+
+#review-box{
+    margin-left: 15px;
+    width: 200px;
+    height: 80px;
+    resize: vertical;
+}
+
+.review-stars{
+    cursor: pointer;
+}
+
+.review-post-cancel-buttons{
+    margin-left: 5px;
+    /* margin-bottom: 10px; */
+}
 
 

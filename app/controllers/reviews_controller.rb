@@ -3,6 +3,7 @@ class ReviewsController < ApplicationController
     rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
     
     before_action :set_reviewable, only: [:show, :index]
+    skip_before_action :authorized, only: [:index, :create]
 
     def index
         @reviews = @reviewable.reviews
@@ -25,7 +26,7 @@ class ReviewsController < ApplicationController
 
     def create
         album = Album.find(params[:album_id])
-        user = User.find(params[:user_id])
+        user = current_user
         review = Review.new(review_params)
         review.album = album
         review.user = user

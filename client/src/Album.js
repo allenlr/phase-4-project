@@ -5,12 +5,57 @@ import Reviews from './Reviews'
 const Album = ({ album }) => {
     const [showReviews, setShowReviews] = useState(false)
     const [reviews, setReviews] = useState(album.reviews)
+    const [newReviewComment, setNewReviewComment] = useState("")
+    const [newReviewRating, setNewReviewRating] = useState(5)
+    const [writingReview, setWritingReview] = useState(false)
+    const [error, setError] = useState("")
 
     function handleUpdatedReview(updatedReview){
         setReviews((prevReviews) =>
             prevReviews.map((review) => review.id === updatedReview.id ? updatedReview : review)
         )
     }
+
+
+    function handleStarClick(rating){
+        setNewReviewRating(rating)
+    }
+
+    function renderRating(){
+        let stars = []
+        for (let i = 1; i <= 5; i++) {
+            if (i <= newReviewRating)
+                stars.push(<span className="review-stars" key={i} onClick={() => handleStarClick(i)}>⭐</span>)
+            else{
+                stars.push(<span className="review-stars" key={i} onClick={() => handleStarClick(i)}>☆</span>)
+            }
+        }
+        return stars
+    }
+
+    function handlePostReview(){
+        const token = localStorage.getItem("token");
+        fetch(`/albums/${album.id}/reviews`,{
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`,
+            },
+            body: JSON.stringify({comment: newReviewComment, rating: newReviewRating})
+        })
+        .then((r) => {
+            if(!r.ok) {
+                return r.json().then((error) => Promise.reject(error))
+            }
+            return r.json()
+        })
+        .then((newReview) => {
+            setReviews([...reviews, newReview])
+            setWritingReview(false)
+        })
+        .catch((error) => setError(error))
+    }
+
 
     return (
         <div>
@@ -33,7 +78,20 @@ const Album = ({ album }) => {
                 )
             }) : null}
             <div>
-                <button id="write-review-button">Write Review</button>
+                <button id="write-review-button" onClick={() => setWritingReview(true)}>Write Review</button>
+                <br/>
+                <br/>
+                    {writingReview ? 
+                        <div>
+                            <textarea id="review-box" value={newReviewComment} onChange={(e) => {setNewReviewComment(e.target.value)}}> </textarea>
+                            {renderRating()}
+                            <button className="review-post-cancel-buttons" onClick={handlePostReview}>Post</button>
+                            <button className="review-post-cancel-buttons" onClick={() => setWritingReview(false)}>Cancel</button>
+                        </div>
+                    : 
+                        null
+                    }
+                
             </div>
         </div>
     )
