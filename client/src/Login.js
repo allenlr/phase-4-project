@@ -9,7 +9,7 @@ function Login(){
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
 
-    function handleSubmit(e) {
+    function handleLogin(e) {
         e.preventDefault();
         fetch("/login", {
             method: "POST",
@@ -39,7 +39,7 @@ function Login(){
                 Login
                 <br/>
                 <br/>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleLogin}>
                     username: 
                     <input
                         style={{marginLeft: "5px"}}

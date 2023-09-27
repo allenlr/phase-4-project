@@ -7,6 +7,7 @@ import Home from './Home';
 import Albums from './Albums';
 import Login from './Login';
 import Register from './Register';
+import Account from './Account';
 import NotFound from './NotFound';
 import UserContext from './context/UserContext';
 
@@ -49,8 +50,6 @@ function App() {
     }
   }, []);
 
-  // console.log(currentUser)
-  console.log(localStorage.getItem("token"))
   
   return (
     <Router>
@@ -59,6 +58,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/albums" element={<Albums />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/account" element={<Account/>} />
         <Route path="/register" element={<Register />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

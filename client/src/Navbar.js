@@ -22,7 +22,7 @@ function Navbar(){
                 </Link>
                 {!currentUser ? <Link to="/register" className="nav-link">
                     Register
-                </Link> : null}
+                </Link> : <Link to="/account" className="nav-link">My Account</Link>}
                 {currentUser ? 
                     <button id="logout-button" onClick={handleLogout}>Logout</button> 
                     : 

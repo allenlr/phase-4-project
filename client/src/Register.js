@@ -12,7 +12,7 @@ function Register(){
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
 
-    function onSubmit(e){
+    function handleRegisterSubmit(e){
         e.preventDefault();
         setLoading(false);
         setError(null);
@@ -54,7 +54,7 @@ function Register(){
         <div className="register-div">
             <h2>Register</h2>
             {error && <div style={{ color: 'red' }}>{error}</div>}
-            <form onSubmit={onSubmit}>
+            <form onSubmit={handleRegisterSubmit}>
                 <div>
                     <label>
                         Username: 
