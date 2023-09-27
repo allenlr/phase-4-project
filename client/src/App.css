@@ -72,6 +72,28 @@ body {
   cursor: not-allowed;
 }
 
+#save-changes-button{
+  width: 291px;
+  color: #000000;
+  background-color: #008BFF;
+  border: none;
+  padding: 10px 10px;
+  border-radius: 4px;
+  cursor: hand;
+  font-size: 15px;
+  transition: background-color 0.3s;
+  margin-top: 5px;
+}
+
+#save-changes-button:hover {
+  background-color: #0056a3; 
+}
+
+#save-changes-button:disabled {
+  background-color: #b3c7dc;
+  cursor: not-allowed;
+}
+
 #logout-button {
   width: 70px;
   height: 30px;
