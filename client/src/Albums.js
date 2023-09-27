@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import AlbumContext from './context/AlbumContext';
 import Album from './Album';
+import './Album.css'
 
 function Albums(){
 
@@ -20,15 +21,17 @@ function Albums(){
     }, [setAlbums])
 
     return(
-        <div>
+        <div className="albums-container">
             <br/>
             <br/>
-            <div style={{marginLeft: "12px"}}>
+            <h2 className="albums-head">
                 Albums:
+            </h2>
+            <div className="album-list">
+                {albums?.length > 0 ? albums.map(album => (
+                    <Album key={album.id} album={album} />
+                )) : <p>Loading...</p>}
             </div>
-            {albums?.length > 0 ? albums.map(album => (
-                <Album key={album.id} album={album} />
-            )) : <p>Loading...</p>}
         </div>
     )
 }
