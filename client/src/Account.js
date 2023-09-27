@@ -5,9 +5,9 @@ import UserContext from './context/UserContext';
 function Account(){
     const { currentUser, setCurrentUser, setIsLoading } = useContext(UserContext);
     
-    const [newUsername, setNewUsername] = useState('')
+    const [newUsername, setNewUsername] = useState(currentUser.user.username)
     const [newPassword, setNewPassword] = useState('')
-    const [newEmail, setNewEmail] = useState('');
+    const [newEmail, setNewEmail] = useState(currentUser.user.email);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
@@ -43,6 +43,10 @@ function Account(){
                 </div>
                 <button id="save-changes-button" type="submit" disabled={loading}>
                     {loading ? 'Updating...' : 'Save Changes'}
+                </button>
+                <br/>
+                <button id="delete-user-button" type="submit" disabled={loading}>
+                    {loading ? 'Updating...' : 'Delete Account'}
                 </button>
             </form>
         </div>
