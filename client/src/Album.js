@@ -52,6 +52,7 @@ const Album = ({ album }) => {
         .then((newReview) => {
             setReviews([...reviews, newReview])
             setWritingReview(false)
+            setNewReviewComment("")
         })
         .catch((error) => setError(error))
     }

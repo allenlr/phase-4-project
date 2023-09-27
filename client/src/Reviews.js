@@ -51,7 +51,6 @@ function Reviews({ review, onUpdate }){
         setEditing(false)
     }
 
-
     const getStars = (rating) => {
         return '⭐'.repeat(rating);
     };
@@ -75,7 +74,7 @@ function Reviews({ review, onUpdate }){
     return(
         <div className="review-div">
             <p>{review?.user_name}: {review?.comment} {getStars(review?.rating)}</p>
-            {review?.user_name === currentUser?.user.username ? <span onClick={handleEdit} className="edit-comment">Edit <i class="fa fa-pencil"></i></span> : null}
+            {review?.user_id === currentUser?.user.id ? <span onClick={handleEdit} className="edit-comment">Edit <i class="fa fa-pencil"></i></span> : null}
             {editing ? 
             <>
             <textarea id="comment-edit-box" onChange={handleCommentChange} value={comment}> </textarea>

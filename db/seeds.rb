@@ -5,6 +5,8 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+require 'faker'
+
 Review.destroy_all
 Album.destroy_all
 User.destroy_all
@@ -21,34 +23,30 @@ user2 = User.create!(
     password: "password123"
 )
 
-album1 = Album.create!(
-    title: "Album1",
-    artist: "Artist1",
-    release_date: "2022-01-01",
-    image_url: "https://i.ytimg.com/vi/MXNbfU0Ww_E/maxresdefault.jpg"
-)
-album2 = Album.create!(
-    title: "Album2",
-    artist: "Artist2",
-    release_date: "2022-01-01",
-    image_url: "https://i.discogs.com/x9osLuYzOWJGg576esVw_vFX8hocIU6mEKGTLx-hQfU/rs:fit/g:sm/q:90/h:451/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE0NzU3/NjYtMTIyMjUwODAw/Ny5qcGVn.jpeg")
-    
-album3 = Album.create!(
-    title: "Album3",
-    artist: "Artist2",
-    release_date: "2019-01-01",
-    image_url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUSr8btZ3Gk8OCBl5DubEt2tMU3GVr8YCiJw&usqp=CAU"
-)
+10.times do |i|
+    title = Faker::Music.album
+    artist = Faker::Music.band
+    release_date = Faker::Date.backward(days: 365 * 5) # This will give a date up to 5 years ago
+    image_url = Faker::Avatar.image(slug: "album-#{i}", size: "300x300") # Generates a random avatar image. You might want a different source for album covers.
+  
+    album = Album.create!(
+      title: title,
+      artist: artist,
+      release_date: release_date,
+      image_url: image_url
+    )
+    puts "Created Album ##{i + 1}: #{title} by #{artist} (Released: #{release_date})"
+end
 
 Review.create!(
-    user: user1,
-    album: album1,
+    user_id: user1.id,
+    album_id: Album.first.id,
     rating: 5,
     comment: "Great album"
 )
 Review.create!(
-    user: user2,
-    album: album2,
+    user_id: user2.id,
+    album_id: Album.second.id,
     rating: 3,
     comment: "It's alright"
 )
