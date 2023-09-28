@@ -9,7 +9,6 @@ class UsersController < ApplicationController
 
     def create
         @user = User.create(user_params)
-        # byebug
         if @user.valid?
             @token = encode_token({ user_id: @user.id })
             render json: { user: UserSerializer.new(@user), jwt: @token }, status: :created 
@@ -23,16 +22,15 @@ class UsersController < ApplicationController
     end
 
     def update
-        raise CustomError, "Incorrect old password" unless current_user.authenticate(params[:oldPassword])
+        raise CustomError, "Incorrect old password" unless current_user.authenticate(old_password)
         current_user.update!(user_params.except(:oldPassword))
         render json: current_user, status: :ok
     end
 
     def destroy
-        puts "received old password: #{params[:oldPassword]}"
         user = User.find_by(id: params[:id])
 
-        unless user && user.authenticate(params[:oldPassword])
+        unless user && user.authenticate(old_password)
             render json: { error: "Incorrect password" }, status: :unauthorized
             return
         end
@@ -48,7 +46,11 @@ class UsersController < ApplicationController
     private
 
     def user_params
-        params.require(:user).permit(:username, :email, :password, :password_confirmation, :oldPassword)
+        params.require(:user).permit(:username, :email, :password, :password_confirmation)
+    end
+
+    def old_password
+        params[:oldPassword]
     end
 
     def unprocessable_entity(exception)
