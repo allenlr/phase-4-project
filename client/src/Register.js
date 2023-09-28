@@ -18,9 +18,11 @@ function Register(){
         setError(null);
 
         const user = {
-            username,
-            password,
-            email,
+            user: {
+                username,
+                password,
+                email,
+            },
         };
 
         fetch(`/users`, {
@@ -30,14 +32,22 @@ function Register(){
         })
         .then(res => {
             if(res.ok){
-                res.json().then((user) =>  {
-                    setCurrentUser(user);
-                    navigate('/');
-                })
+                return res.json()
             } else {
-                res.json().then((data) => {
-                    setError(data.error || 'Registration failed');
+                return res.json().then((data) => {
+                throw new Error(data.error || 'Registration failed');
                 })
+            }
+        })
+        .then((user) => {
+            console.log(user);
+            if (user && user.jwt) {
+                localStorage.setItem("token", user.jwt);
+                setCurrentUser(user);
+                navigate('/');
+            }
+            else {
+                setError("Token not received from server. Please try again.");
             }
         })
         .catch((error) => {

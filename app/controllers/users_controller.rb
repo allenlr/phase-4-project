@@ -9,11 +9,12 @@ class UsersController < ApplicationController
 
     def create
         @user = User.create(user_params)
+        # byebug
         if @user.valid?
             @token = encode_token({ user_id: @user.id })
             render json: { user: UserSerializer.new(@user), jwt: @token }, status: :created 
         else
-            render json: { error: "failed to create user" }, status: :unprocessable_entity
+            render json: { error: @user.errors.full_messages.join(", ") }, status: :unprocessable_entity
         end
     end
 
@@ -47,7 +48,7 @@ class UsersController < ApplicationController
     private
 
     def user_params
-        params.permit(:username, :email, :password, :password_confirmation, :oldPassword)
+        params.require(:user).permit(:username, :email, :password, :password_confirmation, :oldPassword)
     end
 
     def unprocessable_entity(exception)

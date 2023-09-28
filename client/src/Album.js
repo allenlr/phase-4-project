@@ -40,7 +40,7 @@ const Album = ({ album }) => {
             setError("You must be logged in to post a review");
             return;
         }
-        
+
         fetch(`/albums/${album.id}/reviews`,{
             method: "POST",
             headers: {
@@ -51,7 +51,7 @@ const Album = ({ album }) => {
         })
         .then((r) => {
             if(!r.ok) {
-                return r.json().then((error) => Promise.reject(error))
+                return r.json().then((data) => setError(data.error))
             }
             return r.json()
         })
@@ -60,7 +60,7 @@ const Album = ({ album }) => {
             setWritingReview(false)
             setNewReviewComment("")
         })
-        .catch((error) => setError(error))
+        .catch((error) => setError(error.message))
     }
 
 
@@ -79,6 +79,7 @@ const Album = ({ album }) => {
                     <p><strong>Release Date: </strong>{album.release_date}</p>
                 </div>
             </div>
+            {error && <div style={{ color: 'red' }}>Error: {error}</div>}
             {showReviews ? reviews.map((review) => {
                 return (
                         <Reviews key={review.id} review={review} onUpdate={handleUpdatedReview} />
@@ -86,7 +87,6 @@ const Album = ({ album }) => {
             }) : null}
             <div>
                 <button id="write-review-button" onClick={() => setWritingReview(true)}>Write Review</button>
-                {error && <div style={{ color: 'red' }}>Error: {error}</div>}
                 <br/>
                 <br/>
                     {writingReview ? 
