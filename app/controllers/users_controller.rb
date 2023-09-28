@@ -28,9 +28,20 @@ class UsersController < ApplicationController
     end
 
     def destroy
-        user = User.find(params[:id])
-        user.destroy
-        head :no_content
+        puts "received old password: #{params[:oldPassword]}"
+        user = User.find_by(id: params[:id])
+
+        unless user && user.authenticate(params[:oldPassword])
+            render json: { error: "Incorrect password" }, status: :unauthorized
+            return
+        end
+
+        if user == current_user
+            user.destroy
+            head :no_content
+        else
+            render json: {error: "You don't have permissiong to perform this action"}
+        end
     end
 
     private

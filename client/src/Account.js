@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react'
 import UserContext from './context/UserContext';
+import { useNavigate } from 'react-router-dom';
 
 
 function Account(){
@@ -14,6 +15,8 @@ function Account(){
     const [showPassword, setShowPassword] = useState(false);
     const [showOldPassword, setShowOldPassword] = useState(false);
 
+    const navigate = useNavigate();
+
     function handleEditUserSubmit(e){
         e.preventDefault()
         setLoading(false);
@@ -21,9 +24,9 @@ function Account(){
 
         const user = {
             oldPassword,
-            username: newUsername,
-            password: newPassword,
-            email: newEmail
+            username: newUsername?.length > 0 ? newUsername : currentUser?.user.username,
+            password: newPassword?.length > 0 ? newPassword : oldPassword,
+            email: newEmail?.length > 0 ? newEmail : currentUser?.user.email,
         }
 
         console.log(currentUser)
@@ -52,6 +55,31 @@ function Account(){
             .finally(setIsLoading(false))
     }
 
+    function deleteUser(){
+        const token = localStorage.getItem('token')
+        fetch(`/users/${currentUser.user.id}`,{
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ oldPassword })
+        })
+        .then(res => {
+            if (!res.ok){
+                return res.json().then(data => {
+                    throw new Error(data.error || "Unknown error");
+                })
+                
+            } else{
+                setCurrentUser(undefined)
+                navigate('/');
+            }
+        })
+        .catch(error => setError(error.message))   
+        }
+    
+
     return (
         <div className="account">
             <h2 className="edit-user">Edit User Information</h2>
@@ -60,7 +88,7 @@ function Account(){
                 <div>
                     <label>
                         New Username: 
-                        <input style={{marginLeft:"3px"}} type="text" value={newUsername} onChange={(e) => setNewUsername(e.target.value)} required />
+                        <input style={{marginLeft:"3px"}} type="text" value={newUsername} onChange={(e) => setNewUsername(e.target.value)} />
                     </label>
                 </div>
                 <div>
@@ -75,7 +103,7 @@ function Account(){
                 <div>
                     <label>
                         New Password:
-                        <input style={{marginLeft:"8px"}} type={showPassword ? "text" : "password"} value={newPassword} onChange={(e) => setNewPassword(e.target.value)} required />
+                        <input style={{marginLeft:"8px"}} type={showPassword ? "text" : "password"} value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
                     </label>
                     <button style={{fontSize: "10px", marginLeft: "5px"}} type="button" onClick={() => setShowPassword((prev) => !prev)}>
                         {showPassword ? "🚫👁️" : "👁️"}
@@ -85,14 +113,14 @@ function Account(){
                 <div>
                     <label>
                         New Email:
-                        <input style={{marginLeft:"36.6px"}} type="text" value={newEmail} onChange={(e) => setNewEmail(e.target.value)} required />
+                        <input style={{marginLeft:"36.6px"}} type="text" value={newEmail} onChange={(e) => setNewEmail(e.target.value)} />
                     </label>
                 </div>
                 <button id="save-changes-button" type="submit" disabled={loading}>
                     {loading ? 'Updating...' : 'Save Changes'}
                 </button>
                 <br/>
-                <button id="delete-user-button" disabled={loading}>
+                <button onClick={deleteUser} id="delete-user-button" disabled={loading}>
                     {'Delete Account'}
                 </button>
             </form>

@@ -48,8 +48,6 @@ function Register(){
         })
     }
 
-    console.log(error)
-
     return(
         <div className="register-div">
             <h2>Register</h2>
