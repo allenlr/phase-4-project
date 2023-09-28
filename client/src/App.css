@@ -94,6 +94,19 @@ body {
   cursor: not-allowed;
 }
 
+#delete-user-button:hover{
+  background-color: rgb(246, 248, 92);
+}
+
+#delete-user-button{
+  margin-left: 89px;
+  align-items: center;
+}
+#delete-user-button:disabled {
+  background-color: #b3c7dc;
+  cursor: not-allowed;
+}
+
 #logout-button {
   width: 70px;
   height: 30px;

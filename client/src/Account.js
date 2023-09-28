@@ -5,9 +5,9 @@ import UserContext from './context/UserContext';
 function Account(){
     const { currentUser, setCurrentUser, setIsLoading } = useContext(UserContext);
     
-    const [newUsername, setNewUsername] = useState(currentUser.user.username)
+    const [newUsername, setNewUsername] = useState(currentUser?.user.username)
     const [newPassword, setNewPassword] = useState('')
-    const [newEmail, setNewEmail] = useState(currentUser.user.email);
+    const [newEmail, setNewEmail] = useState(currentUser?.user.email);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
@@ -15,6 +15,8 @@ function Account(){
     function handleEditUserSubmit(e){
         e.preventDefault()
     }
+
+    console.log(currentUser)
 
     return (
         <div className="account">
@@ -45,8 +47,8 @@ function Account(){
                     {loading ? 'Updating...' : 'Save Changes'}
                 </button>
                 <br/>
-                <button id="delete-user-button" type="submit" disabled={loading}>
-                    {loading ? 'Updating...' : 'Delete Account'}
+                <button id="delete-user-button" disabled={loading}>
+                    {'Delete Account'}
                 </button>
             </form>
         </div>
