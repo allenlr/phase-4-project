@@ -1,6 +1,4 @@
 class ReviewsController < ApplicationController
-    rescue_from ActiveRecord::RecordInvalid, with: :unprocessable_entity
-    rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
     
     before_action :set_reviewable, only: [:show, :index]
     skip_before_action :authorized, only: [:index, :create]

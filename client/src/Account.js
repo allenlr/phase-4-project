@@ -16,28 +16,52 @@ function Account(){
 
     function handleEditUserSubmit(e){
         e.preventDefault()
-    }
+        setLoading(false);
+        setError(null);
 
-    console.log(currentUser)
+        const user = {
+            oldPassword,
+            username: newUsername,
+            password: newPassword,
+            email: newEmail
+        }
+
+        console.log(currentUser)
+
+        const token = localStorage.getItem('token')
+        fetch(`/users/${currentUser?.user.id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify(user)
+        })
+            .then((res => {
+                if(res.ok){
+                    setCurrentUser({user: {username: newUsername, password: newPassword, email: newEmail} })
+                }
+                else{
+                    res.json().then((data) => {
+                        setError(data.error || "Error Editing User")
+                    })
+                }
+                    
+            }))
+            .catch((error) => setError(error))
+            .finally(setIsLoading(false))
+    }
 
     return (
         <div className="account">
             <h2 className="edit-user">Edit User Information</h2>
+            {error && <div style={{ color: 'red' }}>Error: {error}</div>}
             <form onSubmit={handleEditUserSubmit}>
                 <div>
                     <label>
                         New Username: 
                         <input style={{marginLeft:"3px"}} type="text" value={newUsername} onChange={(e) => setNewUsername(e.target.value)} required />
                     </label>
-                </div>
-                <div>
-                    <label>
-                        New Password:
-                        <input style={{marginLeft:"8px"}} type={showPassword ? "text" : "password"} value={newPassword} onChange={(e) => setNewPassword(e.target.value)} required />
-                    </label>
-                    <button style={{fontSize: "10px", marginLeft: "5px"}} type="button" onClick={() => setShowPassword((prev) => !prev)}>
-                        {showPassword ? "🚫👁️" : "👁️"}
-                    </button>
                 </div>
                 <div>
                     <label>
@@ -48,6 +72,16 @@ function Account(){
                         {showOldPassword ? "🚫👁️" : "👁️"}
                     </button>
                 </div>
+                <div>
+                    <label>
+                        New Password:
+                        <input style={{marginLeft:"8px"}} type={showPassword ? "text" : "password"} value={newPassword} onChange={(e) => setNewPassword(e.target.value)} required />
+                    </label>
+                    <button style={{fontSize: "10px", marginLeft: "5px"}} type="button" onClick={() => setShowPassword((prev) => !prev)}>
+                        {showPassword ? "🚫👁️" : "👁️"}
+                    </button>
+                </div>
+                
                 <div>
                     <label>
                         New Email:

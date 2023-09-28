@@ -41,7 +41,7 @@ function Register(){
             }
         })
         .catch((error) => {
-            setError('Network error');
+            setError(error);
         })
         .finally(() => {
             setLoading(false);
@@ -53,7 +53,7 @@ function Register(){
     return(
         <div className="register-div">
             <h2>Register</h2>
-            {error && <div style={{ color: 'red' }}>{error}</div>}
+            {error && <div style={{ color: 'red' }}>Error: {error}</div>}
             <form onSubmit={handleRegisterSubmit}>
                 <div>
                     <label>

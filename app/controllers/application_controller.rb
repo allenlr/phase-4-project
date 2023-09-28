@@ -7,6 +7,9 @@ class ApplicationController < ActionController::API
   rescue_from CustomError do |exception|
     render json: { error: exception.message }, status: :unauthorized
   end
+  rescue_from ActiveRecord::RecordInvalid, with: :unprocessable_entity
+    rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
+  
 
   def encode_token(payload)
     expiration = 24.hours.from_now.to_i

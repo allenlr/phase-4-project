@@ -1,6 +1,4 @@
 class UsersController < ApplicationController
-    rescue_from ActiveRecord::RecordInvalid, with: :unprocessable_entity
-    rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
     skip_before_action :authorized, only: [:create, :index]
 
@@ -20,17 +18,13 @@ class UsersController < ApplicationController
     end
 
     def show
-        if current_user
-            render json: { user: UserSerializer.new(current_user) }, status: :ok
-        else
-            render json: { error: "Not logged in" }, status: :unauthorized
-        end
+        render json: { user: UserSerializer.new(current_user) }, status: :ok
     end
 
     def update
-        user = User.find(params[:id])
-        user.update!(user_params)
-        render json: user, status: :ok
+        raise CustomError, "Incorrect old password" unless current_user.authenticate(params[:oldPassword])
+        current_user.update!(user_params.except(:oldPassword))
+        render json: current_user, status: :ok
     end
 
     def destroy
@@ -42,7 +36,7 @@ class UsersController < ApplicationController
     private
 
     def user_params
-        params.permit(:username, :email, :password, :password_confirmation)
+        params.permit(:username, :email, :password, :password_confirmation, :oldPassword)
     end
 
     def unprocessable_entity(exception)
