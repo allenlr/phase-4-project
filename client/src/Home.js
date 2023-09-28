@@ -8,8 +8,8 @@ function Home(){
     if(isLoading) return <div>Loading...</div>
     else{
         return(
-            <div>
-                {currentUser ? `Welcome, ${currentUser?.user.username}!` : "Welcome!"}
+            <div className="home">
+                {currentUser ? `Welcome to Music Reviewer, ${currentUser?.user.username}!` : "Welcome to Music Reviewer!"}
             </div>
         )
     }

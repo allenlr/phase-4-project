@@ -8,7 +8,7 @@ function Register(){
     const [email, setEmail] = useState('');
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
-    const { currentUser, setCurrentUser } = useContext(UserContext)
+    const { setCurrentUser } = useContext(UserContext)
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
 
