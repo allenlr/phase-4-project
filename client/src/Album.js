@@ -35,6 +35,12 @@ const Album = ({ album }) => {
 
     function handlePostReview(){
         const token = localStorage.getItem("token");
+
+        if (!token) {
+            setError("You must be logged in to post a review");
+            return;
+        }
+        
         fetch(`/albums/${album.id}/reviews`,{
             method: "POST",
             headers: {
@@ -80,6 +86,7 @@ const Album = ({ album }) => {
             }) : null}
             <div>
                 <button id="write-review-button" onClick={() => setWritingReview(true)}>Write Review</button>
+                {error && <div style={{ color: 'red' }}>Error: {error}</div>}
                 <br/>
                 <br/>
                     {writingReview ? 

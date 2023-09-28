@@ -32,7 +32,7 @@ function Reviews({ review, onUpdate }){
         })
         .then((r) => {
             if (!r.ok) {
-                return r.json().then((error) => Promise.reject(error));
+                return r.json().then((error) => setError(error));
             }
             return r.json();
         })
@@ -73,16 +73,19 @@ function Reviews({ review, onUpdate }){
 
     return(
         <div className="review-div">
-            <p>{review?.user_name}: {review?.comment} {getStars(review?.rating)}</p>
-            {review?.user_id === currentUser?.user.id ? <span onClick={handleEdit} className="edit-comment">Edit <i class="fa fa-pencil"></i></span> : null}
+            <p>
+                {review?.user_name}: {review?.comment} {getStars(review?.rating)}
+                {review?.user_id === currentUser?.user.id ? <span onClick={handleEdit} className="edit-comment">Edit <i class="fa fa-pencil"></i></span> : null}
+            </p>     
+            {error && <div style={{ color: 'red' }}>Error: {error}</div>}
             {editing ? 
-            <>
-            <textarea id="comment-edit-box" onChange={handleCommentChange} value={comment}> </textarea>
-            {renderStars()}
-            {error ? <span style={{color: "red"}}>{error}</span> : null}
-            <button onClick={handleSave}>Save</button>
-            <button onClick={handleCancel}>Cancel</button>
-            </>
+                <>
+                    <textarea id="comment-edit-box" onChange={handleCommentChange} value={comment}> </textarea>
+                    {renderStars()}
+                    {error ? <span style={{color: "red"}}>{error}</span> : null}
+                    <button onClick={handleSave}>Save</button>
+                    <button onClick={handleCancel}>Cancel</button>
+                </>
             : null}
         </div>
     )

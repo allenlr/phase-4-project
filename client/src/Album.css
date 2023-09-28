@@ -28,7 +28,6 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     max-width: 300px;
     flex-direction: column;
-    /* align-items: center; */
     justify-content: center;
     transition: transform 0.1s;
 }
@@ -59,7 +58,7 @@
 }
 
 .edit-comment {
-    color: rgb(255, 255, 255);
+    color: rgb(67, 237, 243);
     cursor: pointer;
 }
 
