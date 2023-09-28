@@ -95,12 +95,11 @@ body {
 }
 
 #delete-user-button:hover{
-  background-color: rgb(246, 248, 92);
+  background-color: rgb(212, 212, 212);
 }
 
 #delete-user-button{
   margin-left: 89px;
-  align-items: center;
 }
 #delete-user-button:disabled {
   background-color: #b3c7dc;
