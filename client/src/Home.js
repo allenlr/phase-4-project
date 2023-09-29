@@ -1,18 +1,17 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import UserContext from './context/UserContext';
+import { isEmpty } from './utils';
 
 
 function Home(){
     const { currentUser, isLoading } = useContext(UserContext)
     
-    if(isLoading) return <div>Loading...</div>
-    else{
-        return(
-            <div className="home">
-                {currentUser ? `Welcome to Music Reviewer, ${currentUser?.user.username}!` : "Welcome to Music Reviewer!"}
-            </div>
-        )
-    }
+
+    return(
+        <div className="home">
+            {!isEmpty(currentUser) && !isLoading ? `Welcome to Music Reviewer, ${currentUser.username}!` : "Welcome to Music Reviewer!"}
+        </div>
+    )
 }
 
 export default Home;

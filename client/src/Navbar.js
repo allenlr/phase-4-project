@@ -1,15 +1,17 @@
 import React, { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import UserContext from './context/UserContext';
+import { isEmpty } from './utils';
 
 function Navbar(){
     const navigate = useNavigate();
 
     const { currentUser, setCurrentUser } = useContext(UserContext);
 
+    console.log(currentUser)
     function handleLogout() {
         localStorage.removeItem("token");
-        setCurrentUser(null);
+        setCurrentUser({});
         navigate('/')
     }
 
@@ -22,10 +24,10 @@ function Navbar(){
                 <Link to="/albums" className="nav-link">
                     Albums
                 </Link>
-                {!currentUser ? <Link to="/register" className="nav-link">
+                {isEmpty(currentUser) ? <Link to="/register" className="nav-link">
                     Register
                 </Link> : <Link to="/account" className="nav-link">My Account</Link>}
-                {currentUser ? 
+                {!isEmpty(currentUser) ? 
                     <button id="logout-button" onClick={handleLogout}>Logout</button> 
                     : 
                     <Link to="/login" className="nav-link">

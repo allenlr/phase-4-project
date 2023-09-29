@@ -22,9 +22,16 @@ class UsersController < ApplicationController
     end
 
     def update
+        puts "Received Params: #{params.inspect}"
+        puts "Errors: #{current_user.errors.full_messages}" unless current_user.valid?
+
         raise CustomError, "Incorrect old password" unless current_user.authenticate(old_password)
-        current_user.update!(user_params.except(:oldPassword))
-        render json: current_user, status: :ok
+        if current_user.update(user_params.except(:oldPassword))
+            render json: current_user, status: :ok
+        else
+            puts "Update failed with errors: #{current_user.errors.full_messages}"
+            render json: { error: current_user.errors.full_messages.join(", ") }
+        end
     end
 
     def destroy
@@ -39,14 +46,14 @@ class UsersController < ApplicationController
             user.destroy
             head :no_content
         else
-            render json: {error: "You don't have permissiong to perform this action"}
+            render json: {error: "You don't have permission to perform this action"}
         end
     end
 
     private
 
     def user_params
-        params.require(:user).permit(:username, :email, :password, :password_confirmation)
+        params.require(:user).permit(:username, :email, :password)
     end
 
     def old_password
