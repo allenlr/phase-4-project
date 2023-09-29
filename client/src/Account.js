@@ -14,6 +14,7 @@ function Account(){
     // const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [showOldPassword, setShowOldPassword] = useState(false);
+    const [showSuccessMessage, setShowSuccessMessage] = useState(false);
     const navigate = useNavigate();
 
     console.log(currentUser)
@@ -22,7 +23,6 @@ function Account(){
         e.preventDefault()
         setError(null);
 
-        const userId = currentUser?.id;
         const user = {
             password: newPassword,
             oldPassword: oldPassword,
@@ -35,7 +35,7 @@ function Account(){
         }
 
         const token = localStorage.getItem('token')
-        fetch(`/users/${userId}`, {
+        fetch(`/users/${currentUser.id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
@@ -45,17 +45,22 @@ function Account(){
         })
             .then(res => {
                 if (!res.ok) {
-                    return res.json().then(data => {
-                        throw new Error(data.error || "Unknown error");
-                    })
+                    if (res.status === 401) {
+                        throw new Error("Incorrect password or unauthorized access");
+                    } else {
+                        return res.json().then(data => {
+                            throw new Error(data.error || "Unknown error");
+                        })
+                    }
                 }
                 return res.json();
             })
             .then(data => {
-                setCurrentUser(data.user);
+                setCurrentUser(data);
+                setShowSuccessMessage(true)
                 setIsLoading(false);     
             })
-            .catch((error) => setError(error))
+            .catch((error) => setError(error.message))
             .finally(setIsLoading(false))
     }
 
@@ -83,11 +88,12 @@ function Account(){
         .catch(error => setError(error.message))   
         }
     
-    if(!currentUser?.username || isLoading) return <div>Loading...</div>
+    if(!currentUser?.username) return <div>Loading...</div>
     else{
         return (
             <div className="account">
                 <h2 className="edit-user">Edit User Information</h2>
+                {showSuccessMessage && <div style={{ color: 'green' }}>User Changed Successfully</div>}
                 {error && <div style={{ color: 'red' }}>Error: {error}</div>}
                 <form onSubmit={handleEditUserSubmit}>
                     <div>
