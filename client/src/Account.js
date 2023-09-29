@@ -30,11 +30,8 @@ function Account(){
             email: newEmail,
         }
 
-        if (newPassword?.length > 0) {
-            user.password = newPassword;
-        }
-
         const token = localStorage.getItem('token')
+        setIsLoading(true);
         fetch(`/users/${currentUser.id}`, {
             method: "PATCH",
             headers: {

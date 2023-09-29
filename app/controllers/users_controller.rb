@@ -24,29 +24,21 @@ class UsersController < ApplicationController
     def update
         puts "Updating user..."
         puts "Received Params: #{params}"
-        
-    
-        if user_params[:password].present?
       
-          unless user_params[:oldPassword] && current_user.authenticate(user_params[:oldPassword])
+        if user_params[:password].present?
+          unless current_user.authenticate(user_params[:oldPassword])
             render json: { error: "Old password is incorrect" }, status: :unprocessable_entity
             return
           end
-
-          current_user.password = user_params[:password]
-          unless current_user.save
-            puts "Failed to save password change: #{current_user.errors.full_messages}"
-            render json: { error: "Failed to change password" }, status: :unprocessable_entity
-            return
-          end
         end
-      
-        if current_user.update(user_params.except(:password, :oldPassword))
+          
+        if current_user.update(user_params.except(:oldPassword))
           render json: current_user
         else
           render json: { error: "Update failed" }, status: :unprocessable_entity
         end
       end
+      
       
       
       
@@ -71,10 +63,6 @@ class UsersController < ApplicationController
 
     def user_params
         params.permit(:username, :email, :password, :oldPassword)
-    end
-
-    def old_password
-        params[:oldPassword]
     end
 
     def unprocessable_entity(exception)
