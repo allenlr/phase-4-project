@@ -93,7 +93,7 @@ function Account(){
         return (
             <div className="account">
                 <h2 className="edit-user">Edit User Information</h2>
-                {showSuccessMessage && <div style={{ color: 'green' }}>User Changed Successfully</div>}
+                {showSuccessMessage && <div style={{ color: 'green' }}>Changes Saved</div>}
                 {error && <div style={{ color: 'red' }}>Error: {error}</div>}
                 <form onSubmit={handleEditUserSubmit}>
                     <div>

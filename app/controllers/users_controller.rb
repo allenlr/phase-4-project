@@ -22,17 +22,34 @@ class UsersController < ApplicationController
     end
 
     def update
-        puts "Received Params: #{params.inspect}"
-        puts "Errors: #{current_user.errors.full_messages}" unless current_user.valid?
+        puts "Updating user..."
+        puts "Received Params: #{params}"
+        
+    
+        if user_params[:password].present?
+      
+          unless user_params[:oldPassword] && current_user.authenticate(user_params[:oldPassword])
+            render json: { error: "Old password is incorrect" }, status: :unprocessable_entity
+            return
+          end
 
-        raise CustomError, "Incorrect old password" unless current_user.authenticate(old_password)
-        if current_user.update(user_params.except(:oldPassword))
-            render json: current_user, status: :ok
-        else
-            puts "Update failed with errors: #{current_user.errors.full_messages}"
-            render json: { error: current_user.errors.full_messages.join(", ") }
+          current_user.password = user_params[:password]
+          unless current_user.save
+            puts "Failed to save password change: #{current_user.errors.full_messages}"
+            render json: { error: "Failed to change password" }, status: :unprocessable_entity
+            return
+          end
         end
-    end
+      
+        if current_user.update(user_params.except(:password, :oldPassword))
+          render json: current_user
+        else
+          render json: { error: "Update failed" }, status: :unprocessable_entity
+        end
+      end
+      
+      
+      
 
     def destroy
         user = User.find_by(id: params[:id])
@@ -53,7 +70,7 @@ class UsersController < ApplicationController
     private
 
     def user_params
-        params.require(:user).permit(:username, :email, :password)
+        params.permit(:username, :email, :password, :oldPassword)
     end
 
     def old_password
