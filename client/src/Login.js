@@ -21,14 +21,15 @@ function Login(){
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({user: { username, password }}),
+            body: JSON.stringify({ username, password }),
         })
             .then((r) => r.json())
             .then((data) => {
-                console.log(data.jwt)
+                console.log(data)
                 if (data.jwt) {
                     localStorage.setItem("token", data.jwt);
-                    setCurrentUser(data.user);
+                    const { jwt, ...userDetails } = data;
+                    setCurrentUser(userDetails);
                     setError("");
                     setIsLoading(false);
                     navigate('/');

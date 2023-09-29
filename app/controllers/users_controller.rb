@@ -11,7 +11,7 @@ class UsersController < ApplicationController
         @user = User.create(user_params)
         if @user.valid?
             @token = encode_token({ user_id: @user.id })
-            render json: UserSerializer.new(@user).as_json.merge(jwt: @token), status: :created 
+            render json: UserSerializer.new(@user).serializable_hash.merge(jwt: @token), status: :created 
         else
             render json: { error: @user.errors.full_messages.join(", ") }, status: :unprocessable_entity
         end
