@@ -18,11 +18,9 @@ function Register(){
         setError(null);
 
         const user = {
-            user: {
-                username,
-                password,
-                email,
-            },
+            username,
+            password,
+            email,
         };
 
         fetch(`/users`, {

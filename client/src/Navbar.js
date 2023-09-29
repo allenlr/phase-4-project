@@ -7,8 +7,7 @@ function Navbar(){
     const navigate = useNavigate();
 
     const { currentUser, setCurrentUser } = useContext(UserContext);
-
-    console.log(currentUser)
+    
     function handleLogout() {
         localStorage.removeItem("token");
         setCurrentUser({});

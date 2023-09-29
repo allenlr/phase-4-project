@@ -16,7 +16,7 @@ function Account(){
     const [showOldPassword, setShowOldPassword] = useState(false);
     const navigate = useNavigate();
 
-    console.log("currentUser:", currentUser?.id || "");
+    console.log(currentUser)
 
     function handleEditUserSubmit(e){
         e.preventDefault()
