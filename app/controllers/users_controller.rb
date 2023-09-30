@@ -18,7 +18,11 @@ class UsersController < ApplicationController
     end
 
     def show
-        render json: UserSerializer.new(current_user), status: :ok
+        if current_user
+            render json: UserSerializer.new(current_user).serializable_hash, status: :ok
+        else
+            render json: { error: "Token validation failed" }, status: :unauthorized
+        end
     end
 
     def update

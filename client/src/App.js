@@ -29,11 +29,13 @@ function App() {
       })
       .then((r) => {
         if (!r.ok) {
+          console.log(r)
           throw new Error("Token validation failed");
         }
         return r.json();
       })
       .then((user) => {
+        console.log(user);
         setCurrentUser(user);
       })
       .catch((error) => {
@@ -42,6 +44,7 @@ function App() {
       })
       .finally(() => {
         setIsLoading(false);
+        console.log(token)
       })
     } else {
       setIsLoading(false);
