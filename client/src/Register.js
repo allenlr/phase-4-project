@@ -38,7 +38,6 @@ function Register(){
             }
         })
         .then((user) => {
-            console.log(user);
             if (user && user.jwt) {
                 localStorage.setItem("token", user.jwt);
                 setCurrentUser(user);

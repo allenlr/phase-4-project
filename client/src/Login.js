@@ -24,7 +24,6 @@ function Login(){
         })
             .then((r) => r.json())
             .then((data) => {
-                console.log(data)
                 if (data.jwt) {
                     localStorage.setItem("token", data.jwt);
                     const { jwt, ...userDetails } = data;
