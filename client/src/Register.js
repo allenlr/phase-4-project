@@ -33,7 +33,7 @@ function Register(){
                 return res.json()
             } else {
                 return res.json().then((data) => {
-                throw new Error(data.error || 'Registration failed');
+                    throw new Error(data.error || 'Registration failed');
                 })
             }
         })
@@ -49,12 +49,13 @@ function Register(){
             }
         })
         .catch((error) => {
-            setError(error);
+            setError(error.message);
         })
         .finally(() => {
             setLoading(false);
         })
     }
+    // console.log(user)
 
     return(
         <div className="register-div">
