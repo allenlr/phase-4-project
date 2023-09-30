@@ -46,6 +46,17 @@ function Reviews({ review, onUpdate }){
         })
     }
 
+    function handleDelete(){
+        const token = localStorage.getItem("token")
+        fetch(`/users/${review.user_id}/reviews/${review.id}`,{
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            }
+        })
+    }
+
     function handleCancel(){
         setComment(review?.comment)
         setEditing(false)
@@ -76,7 +87,7 @@ function Reviews({ review, onUpdate }){
             <p>
                 {review?.user_name}: {review?.comment} {getStars(review?.rating)}
                 {review?.user_id === currentUser?.id ? <span onClick={handleEdit} className="edit-comment">Edit <i class="fa fa-pencil"></i></span> : null}
-                {review?.user_id === currentUser?.id ? <span className="delete-review">Delete</span> : null}
+                {review?.user_id === currentUser?.id ? <span className="delete-review" onClick={handleDelete}>Delete</span> : null}
             </p>     
             {error && <div style={{ color: 'red' }}>Error: {error}</div>}
             {editing ? 
