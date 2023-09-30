@@ -1,13 +1,13 @@
 class ApplicationController < ActionController::API
   require 'jwt'
   include ActionController::Cookies
-
+  wrap_parameters false
   before_action :authorized
   
   rescue_from CustomError do |exception|
     render json: { error: exception.message }, status: :unauthorized
   end
-  
+
   rescue_from ActiveRecord::RecordInvalid, with: :unprocessable_entity
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
   

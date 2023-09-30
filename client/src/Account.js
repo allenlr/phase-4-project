@@ -52,11 +52,14 @@ function Account(){
             })
             .then(data => {
                 setCurrentUser(data);
-                setShowSuccessMessage(true)
-                setIsLoading(false);     
+                setShowSuccessMessage(true)   
             })
-            .catch((error) => setError(error.message))
-            .finally(setIsLoading(false))
+            .catch((error) => {
+                setError(error.message)
+            })
+            .finally(() => {
+                setIsLoading(false)
+            })
     }
 
     function deleteUser(){
@@ -81,11 +84,10 @@ function Account(){
             }
         })
         .catch(error => {
+            console.error("Error caught: ", error.message)
             setError(error.message)
         })   
         }
-        
-        console.log(error)
     
     if(!currentUser?.username) return <div>Loading...</div>
     else{

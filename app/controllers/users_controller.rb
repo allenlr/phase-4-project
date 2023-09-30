@@ -26,22 +26,30 @@ class UsersController < ApplicationController
     end
 
     def update
-        puts "Updating user..."
-        puts "Received Params: #{params}"
-      
-        if user_params[:password].present?
-          unless current_user.authenticate(user_params[:oldPassword])
+        unless user_params[:oldPassword].present?
+            render json: { error: "Old password is required for any update" }, status: :unprocessable_entity
+            return
+        end
+    
+        unless current_user.authenticate(user_params[:oldPassword])
             render json: { error: "Old password is incorrect" }, status: :unprocessable_entity
             return
-          end
         end
-          
+    
+        if user_params[:password].present? && user_params[:password].blank?
+            render json: { error: "New password cannot be empty" }, status: :unprocessable_entity
+            return
+        end
+
         if current_user.update(user_params.except(:oldPassword))
-          render json: current_user
+            render json: current_user
         else
-          render json: { error: "Update failed" }, status: :unprocessable_entity
+            render json: { error: "Update failed" }, status: :unprocessable_entity
         end
     end
+    
+
+    
       
     def destroy
         user = User.find_by(id: params[:id])
