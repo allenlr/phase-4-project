@@ -16,6 +16,12 @@ const Album = ({ album }) => {
         )
     }
 
+    function handleDeleteReview(reviewId){
+        setReviews((prevReviews) => {
+            return prevReviews.filter((review) => review.id !== reviewId)
+        })
+    }
+
 
     function handleStarClick(rating){
         setNewReviewRating(rating)
@@ -82,7 +88,12 @@ const Album = ({ album }) => {
             {error && <div style={{ color: 'red' }}>Error: {error}</div>}
             {showReviews ? reviews.map((review) => {
                 return (
-                        <Reviews key={review.id} review={review} onUpdate={handleUpdatedReview} />
+                        <Reviews 
+                            key={review.id} 
+                            review={review} 
+                            onUpdate={handleUpdatedReview} 
+                            onDelete={handleDeleteReview}
+                        />
                 )
             }) : null}
             <div>

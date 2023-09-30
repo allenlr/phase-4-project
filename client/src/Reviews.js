@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import "./Album.css"
 import UserContext from './context/UserContext';
 
-function Reviews({ review, onUpdate }){
+function Reviews({ review, onUpdate, onDelete }){
 
     const currentUser = useContext(UserContext).currentUser
 
@@ -55,6 +55,12 @@ function Reviews({ review, onUpdate }){
                 Authorization: `Bearer ${token}`,
             }
         })
+        .then((res) => {
+            if (res.ok){
+                onDelete(review.id)
+            }
+        })
+        .catch((error) => setError(error))
     }
 
     function handleCancel(){
