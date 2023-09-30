@@ -41,16 +41,11 @@ class UsersController < ApplicationController
         else
           render json: { error: "Update failed" }, status: :unprocessable_entity
         end
-      end
+    end
       
-      
-      
-      
-
     def destroy
         user = User.find_by(id: params[:id])
-
-        unless user && user.authenticate(old_password)
+        unless user && user.authenticate(params[:oldPassword])
             render json: { error: "Incorrect password" }, status: :unauthorized
             return
         end

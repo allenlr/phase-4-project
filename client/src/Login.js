@@ -11,7 +11,6 @@ function Login(){
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
-    // const [isLoginSuccessful, setIsLoginSuccessful] = useState(false);
 
     function handleLogin(e) {
         e.preventDefault();
@@ -39,8 +38,6 @@ function Login(){
                 }
             });
     }
-
-    console.log(currentUser)
 
 
 

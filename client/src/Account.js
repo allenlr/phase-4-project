@@ -17,8 +17,6 @@ function Account(){
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
     const navigate = useNavigate();
 
-    console.log(currentUser)
-
     function handleEditUserSubmit(e){
         e.preventDefault()
         setError(null);
@@ -82,8 +80,12 @@ function Account(){
                 navigate('/');
             }
         })
-        .catch(error => setError(error.message))   
+        .catch(error => {
+            setError(error.message)
+        })   
         }
+        
+        console.log(error)
     
     if(!currentUser?.username) return <div>Loading...</div>
     else{

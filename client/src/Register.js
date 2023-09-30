@@ -55,7 +55,6 @@ function Register(){
             setLoading(false);
         })
     }
-    // console.log(user)
 
     return(
         <div className="register-div">
