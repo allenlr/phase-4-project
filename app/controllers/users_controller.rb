@@ -83,13 +83,3 @@ end
 
 
 
-payload = { user_id: @user.id, exp: Time.now.to_i + 3600 }
-token = JWT.encode(payload, Rails.application.secrets.secret_key_base)
-
-
-
-decoded_token = JWT.decode(token, Rails.application.secrets.secret_key_base, true, algorithm: 'HS256')
-
-
-
-
