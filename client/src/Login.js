@@ -6,7 +6,7 @@ function Login(){
 
     const navigate = useNavigate();
 
-    const {currentUser, setCurrentUser, isLoading, setIsLoading} = useContext(UserContext);
+    const { setCurrentUser, setIsLoading} = useContext(UserContext);
     const [error, setError] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");

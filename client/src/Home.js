@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import UserContext from './context/UserContext';
 import { isEmpty } from './utils';
 
