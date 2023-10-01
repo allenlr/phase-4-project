@@ -24,10 +24,11 @@ function Account(){
             setShouldNavigate(true)
         }
     }, [currentUser])
-    
+
     useEffect(() => {
         if (shouldNavigate && isEmpty(currentUser)) {
             navigate('/');
+            setShouldNavigate(false)
         }
     }, [currentUser, shouldNavigate, navigate]);
 
