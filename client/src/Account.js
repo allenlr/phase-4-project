@@ -17,10 +17,14 @@ function Account(){
     const [showOldPassword, setShowOldPassword] = useState(false);
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
     const navigate = useNavigate();
-
-
     const [shouldNavigate, setShouldNavigate] = useState(false);
 
+    useEffect(() => {
+        if (isEmpty(currentUser)){
+            setShouldNavigate(true)
+        }
+    }, [currentUser])
+    
     useEffect(() => {
         if (shouldNavigate && isEmpty(currentUser)) {
             navigate('/');
@@ -87,11 +91,14 @@ function Account(){
                 return res.json().then(data => {
                     throw new Error(data.error || "Unknown error");
                 })
-                
-            } else{
-                setCurrentUser({})
-                setShouldNavigate(true);
-            }
+            } 
+            return res.json()
+        })
+        .then(() => {
+            setCurrentUser({})
+        })
+        .then(() => {
+            setShouldNavigate(true)
         })
         .catch(error => {
             console.error("Error: ", error.message)
