@@ -28,6 +28,7 @@ production:
   password: 1YAwwn69trYnkSUNNTy6HUGU1zAkqOCC
   host: dpg-cj2rnnd9aq0e0q4qhagg-a
   port: 5432
+  url: <%= ENV['DATABASE_URL'] %>
 
 
   # The specified database role being used to connect to postgres.
@@ -84,6 +85,6 @@ test:
 # Read https://guides.rubyonrails.org/configuring.html#configuring-a-database
 # for a full overview on how database connection configuration can be specified.
 #
-production:
-  <<: *default
-  url: <%= ENV['DATABASE_URL'] %>
+# production:
+#   <<: *default
+#   url: <%= ENV['DATABASE_URL'] %>

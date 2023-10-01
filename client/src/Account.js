@@ -17,6 +17,15 @@ function Account(){
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
     const navigate = useNavigate();
 
+
+    const [shouldNavigate, setShouldNavigate] = useState(false);
+
+    useEffect(() => {
+        if (shouldNavigate && isEmpty(currentUser)) {
+            navigate('/');
+        }
+    }, [currentUser, shouldNavigate, navigate]);
+
     function handleEditUserSubmit(e){
         e.preventDefault()
         setError(null);
@@ -80,13 +89,13 @@ function Account(){
                 
             } else{
                 setCurrentUser({})
-                navigate('/');
+                setShouldNavigate(true);
             }
         })
         .catch(error => {
-            console.error("Error caught: ", error.message)
+            console.error("Error: ", error.message)
             setError(error.message)
-        })   
+        })
         }
     
     if(!currentUser?.username) return <div>Loading...</div>
