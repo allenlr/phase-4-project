@@ -1,77 +1,4 @@
-# Project Template: React/Rails API
 
-## Description
-
-This project is scaffolded so that you can build a React frontend and Rails
-backend together, and easily deploy them to Render.
-
-**Note**: if you are not planning to deploy your app to Render and prefer to use
-SQLite, you will need to make the following changes in the project files:
-
-1. In the `Gemfile`, replace `gem 'pg', '~> 1.1'` with `gem 'sqlite3', '~>
-   1.4'`.
-2. In the `database.yml` file, change the line `adapter: postgresql` to
-   `adapter: sqlite3`.
-
-## Requirements
-
-- Ruby 2.7.4
-- NodeJS (v16), and npm
-- Render account
-- Postgresql
-
-See Environment Setup below for instructions on installing these tools if you
-don't already have them.
-
-## Setup
-
-Start by **cloning** (not forking) the project template repository and removing
-the remote:
-
-```console
-$ git clone git@github.com:learn-co-curriculum/project-template-react-rails-api.git your-project-name
-$ cd your-project-name
-$ git remote rm origin
-```
-
-Then, [create a new remote repository][create repo] on GitHub. Head to
-[github.com](https://github.com) and click the **+** icon in the top-right
-corner and follow the steps to create a new repository. **Important**: don't
-check any of the options such as 'Add a README file', 'Add a .gitignore file',
-etc. — since you're importing an existing repository, creating any of those
-files on GitHub will cause issues.
-
-[create repo]: https://docs.github.com/en/github/importing-your-projects-to-github/importing-source-code-to-github/adding-an-existing-project-to-github-using-the-command-line#adding-a-project-to-github-without-github-cli
-
-If you're working with a partner,
-[add them as a collaborator][add collaborator] on GitHub. From your repo on
-GitHub, go to Settings > Manage Access > Invite a collaborator and enter your
-partner's username. Once your partner has access, they should git **clone** (not
-fork) the repository.
-
-[add collaborator]: https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-github-user-account/managing-access-to-your-personal-repositories/inviting-collaborators-to-a-personal-repository
-
-Finally, connect the GitHub remote repository to your local repository and push
-up your code:
-
-```console
-$ git remote add origin git@github.com:your-username/your-project-name.git
-$ git push -u origin main
-```
-
-When you're ready to start building your project, run:
-
-```sh
-bundle install
-rails db:create
-npm install --prefix client
-```
-
-You can use the following commands to run the application:
-
-- `rails s`: run the backend on [http://localhost:3000](http://localhost:3000)
-- `npm start --prefix client`: run the frontend on
-  [http://localhost:4000](http://localhost:4000)
 
 Make sure to also update this README to include documentation about
 your project. Here's a list of some [awesome readmes][] for inspiration.
@@ -349,3 +276,43 @@ troubleshoot:
 
 - [Getting Started with Ruby on Rails on Render](https://render.com/docs/deploy-rails)
 - [Render Databases Guide](https://render.com/docs/databases)
+
+# Music Reviewer
+
+Music Reviewer is a web-based application developed as a demonstration 
+of learned concepts and skills in Ruby and ActiveRecord. The purpose of the app
+is to create an interface that allows users to create and manipulate an account
+and its associated album reviews. These capabilities are authenticated through JWTs.
+
+## Requirements
+
+To run this application locally, you'll need:
+
+    Node.js (v14.0.0 or later)
+    npm (v6.0.0 or later)
+
+The application has been designed to work with all modern web browsers.
+
+## Installation
+
+1. Clone the Repository: Firstly, you need to clone the repository to your local
+machine. You can do this by running the following command in your terminal:
+"git clone git@github.com:allenlr/phase-4-project.git"
+
+2. Navigate to the project directory: After cloning the repository, navigate to
+the project directory that you cloned to by running:
+"cd 'name-of-directory'"
+
+3. Install the dependencies using NPM by running the following in your terminal:
+"bundle install" - this will install the gems necessary to run this project,
+followed by "npm install --prefix client" - installs the dependancies needed to 
+run the frontend
+
+4. After installing the necessary gems and dependancies, you can start the 
+backend server by running "rails s" in the terminal and then 
+"npm start --prefix client" to start the frontend server
+
+
+## Configuration
+
+This app does not require any additional configuration outside of the UI.
