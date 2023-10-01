@@ -21,9 +21,14 @@ default: &default
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
-development:
+production:
   <<: *default
-  database: react_rails_api_project_template_development
+  database: my_new_db_instance_urzk
+  username: my_new_db_instance_urzk_user
+  password: 1YAwwn69trYnkSUNNTy6HUGU1zAkqOCC
+  host: dpg-cj2rnnd9aq0e0q4qhagg-a
+  port: 5432
+
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
