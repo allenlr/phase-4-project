@@ -93,7 +93,7 @@ function Reviews({ review, onUpdate, onDelete }){
 
     return(
         <div className="review-div">
-            <span style={{color: 'rgb(67, 237, 243)'}}>{review?.user_name} : </span>
+            <span style={{color: 'rgb(67, 237, 150)'}}>{review?.user_name} : </span>
             <span>
                 {review?.comment} {getStars(review?.rating)}
                 {review?.user_id === currentUser?.id ? <span onClick={handleEdit} className="edit-comment">Edit <i class="fa fa-pencil"></i></span> : null}
