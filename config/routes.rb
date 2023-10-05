@@ -6,11 +6,11 @@ Rails.application.routes.draw do
     resources :reviews, only: [:index, :show, :destroy]
   end
   
-  resources :albums, except: [:new, :edit] do
+  resources :albums, except: [:new, :edit, :destroy] do
     resources :reviews, only: [:create, :index, :destroy, :update]
   end
 
-  resources :documents, only: [:show, :index, :create, :destroy]
+  # resources :documents, only: [:show, :index, :create, :destroy]
   
   post "/login", to: "api/v1/auth#create"
   get "/auth", to: "users#show"

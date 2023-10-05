@@ -12,21 +12,23 @@ class AlbumsController < ApplicationController
     end
 
     def create
-        album = Album.create!(album_params)
-        render json: album, status: :created
-    end
 
-    def destroy
-        album = Album.find(params[:id])
-        album.destroy
-        head :no_content
+        album = Album.new(album_params)
+    
+        if album.save
+            initial_review = current_user.reviews.create(album: album, rating: 5, comment: 'Check this out!')
+            render json: album, status: :created
+        else
+            render json: { errors: album.errors.full_messages }, status: :unprocessable_entity
+        end
     end
+    
 
 
     private
 
     def album_params
-        params.permit(:title, :artist, :release_date)
+        params.require(:album).permit(:title, :artist, :release_date, :image_url)
     end
 
     def record_not_found(exception)

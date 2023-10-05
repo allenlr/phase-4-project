@@ -62,3 +62,5 @@ class ReviewsController < ApplicationController
     end
     
 end
+
+# validate album title etc.. validate review length. make create album function
