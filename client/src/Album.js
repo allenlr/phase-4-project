@@ -8,7 +8,7 @@ const Album = ({ album }) => {
     const [newReviewComment, setNewReviewComment] = useState("")
     const [newReviewRating, setNewReviewRating] = useState(5)
     const [writingReview, setWritingReview] = useState(false)
-    const [error, setError] = useState("")
+    const [error, setError] = useState([])
 
     function handleUpdatedReview(updatedReview){
         setReviews((prevReviews) =>
@@ -57,7 +57,11 @@ const Album = ({ album }) => {
         })
         .then((r) => {
             if(!r.ok) {
-                return r.json().then((data) => setError(data.error))
+                return r.json().then((data) =>{ 
+                    console.log(data.errors)
+                    setError(data.errors)
+                    throw new Error(data.errors || data.errors.join(", "));
+                })
             }
             return r.json()
         })
@@ -66,7 +70,10 @@ const Album = ({ album }) => {
             setWritingReview(false)
             setNewReviewComment("")
         })
-        .catch((error) => setError(error.message))
+        .catch((error) => {
+            setError([error.message.split(", ")])
+
+        })
     }
 
 
@@ -85,7 +92,9 @@ const Album = ({ album }) => {
                     <p><strong>Release Date: </strong>{album.release_date}</p>
                 </div>
             </div>
-            {error && <div style={{ color: 'red' }}>Error: {error}</div>}
+            {error.length > 0 ? error.map((err, index) => {
+                return <div key={index}style={{ color: 'red' }}>Error: {err}</div>
+            }) : null}
             {showReviews ? reviews.map((review) => {
                 return (
                         <Reviews 

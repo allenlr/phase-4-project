@@ -32,7 +32,10 @@ function Reviews({ review, onUpdate, onDelete }){
         })
         .then((r) => {
             if (!r.ok) {
-                return r.json().then((error) => setError(error));
+                return r.json().then((error) => {
+                    console.log(error)
+                    setError(error)
+                });
             }
             return r.json();
         })
