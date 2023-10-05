@@ -69,6 +69,7 @@ const Album = ({ album }) => {
             setReviews([...reviews, newReview])
             setWritingReview(false)
             setNewReviewComment("")
+            setError([])
         })
         .catch((error) => {
             console.log(error)
@@ -122,7 +123,13 @@ const Album = ({ album }) => {
                             <textarea id="review-box" value={newReviewComment} onChange={(e) => {setNewReviewComment(e.target.value)}}> </textarea>
                             {renderRating()}
                             <button className="review-post-cancel-buttons" onClick={handlePostReview}>Post</button>
-                            <button className="review-post-cancel-buttons" onClick={() => setWritingReview(false)}>Cancel</button>
+                            <button className="review-post-cancel-buttons" onClick={() => {
+                                setWritingReview(false)
+                                setError([])
+                                setNewReviewComment("")
+                                }}>
+                                    Cancel
+                            </button>
                         </div>
                     : 
                         null
