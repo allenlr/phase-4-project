@@ -43,7 +43,7 @@ const Album = ({ album }) => {
         const token = localStorage.getItem("token");
 
         if (!token) {
-            setError("You must be logged in to post a review");
+            setError(["You must be logged in to post a review"]);
             return;
         }
 
@@ -60,7 +60,7 @@ const Album = ({ album }) => {
                 return r.json().then((data) =>{ 
                     console.log(data.errors)
                     setError(data.errors)
-                    throw new Error(data.errors || data.errors.join(", "));
+                    throw new Error(data.errors);
                 })
             }
             return r.json()
@@ -71,10 +71,11 @@ const Album = ({ album }) => {
             setNewReviewComment("")
         })
         .catch((error) => {
-            setError([error.message.split(", ")])
+            console.log(error)
 
         })
     }
+    console.log(error)
 
 
     return (
@@ -92,9 +93,16 @@ const Album = ({ album }) => {
                     <p><strong>Release Date: </strong>{album.release_date}</p>
                 </div>
             </div>
-            {error.length > 0 ? error.map((err, index) => {
-                return <div key={index}style={{ color: 'red' }}>Error: {err}</div>
-            }) : null}
+            {error.length > 0 ? 
+            <div style={{ color: 'red' }}>
+                Error(s):
+            {error.map((err, index) => {
+                return (
+                    <li key={index}>
+                        {err}
+                    </li>
+                )
+            })} </div> : null}
             {showReviews ? reviews.map((review) => {
                 return (
                         <Reviews 
