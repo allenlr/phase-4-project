@@ -12,7 +12,6 @@ function Account(){
     const [oldPassword, setOldPassword] = useState('')
     const [newEmail, setNewEmail] = useState(currentUser?.email || "");
     const [error, setError] = useState(null);
-    // const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [showOldPassword, setShowOldPassword] = useState(false);
     const [showSuccessMessage, setShowSuccessMessage] = useState(false);
