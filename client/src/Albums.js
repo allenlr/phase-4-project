@@ -77,9 +77,9 @@ function Albums(){
                 )) : <p>Loading...</p>}
             </div>
             <button className="create-album-button" style={{marginBottom: "20px"}}onClick={() => {setShowAlbumForm(!showAlbumForm)}}>Post Album</button>
-            {error.length > 1 ? error.map((err, index) => {
+            {error.length > 0 ? error.map((err, index) => {
                 return <span key={index} style={{color: "red"}}>{err}</span>
-            }) : error.length  == 1 ? <span style={{color: "red"}}>{error[0]}</span>: null}
+            }) : null}
             {showAlbumForm ? 
                 <form onSubmit={handleAlbumCreate}>
                     <div>
