@@ -19,8 +19,8 @@ class AlbumsController < ApplicationController
             initial_review = current_user.reviews.create(album: album, rating: 5, comment: 'Check this out!')
             render json: album, status: :created
         else
-            render json: { errors: album.errors.full_messages }, status: :unprocessable_entity
-        end
+            raise CustomError.new(album.errors.full_messages.join(", "))
+          end
     end
     
 

@@ -47,19 +47,19 @@ function Albums(){
             if (!r.ok) {
                 return r.json().then((error) => {
                     console.log(error)
-                    setError(error)
-                    throw new Error('Server validation error');
+                    setError(error.errors || [error.error])
+                    throw new Error(error.error || error.errors.join(", "));
                 });
             }
             return r.json();
         })
         .then((newAlbum) => {
-            console.log(newAlbum)
             setAlbums([...albums, newAlbum]);
             setShowAlbumForm(false)
         })
         .catch((error) => {
-            setError(error)
+            console.error("Received error: ", error.message);
+            setError([...error.message.split(", ")])
         })
 
     }
@@ -77,9 +77,9 @@ function Albums(){
                 )) : <p>Loading...</p>}
             </div>
             <button className="create-album-button" style={{marginBottom: "20px"}}onClick={() => {setShowAlbumForm(!showAlbumForm)}}>Post Album</button>
-            {error.length > 0 ? error.map((err, index) => {
-                <span key={index} style={{color: "red"}}>{err}</span>
-            }) : null}
+            {error.length > 1 ? error.map((err, index) => {
+                return <span key={index} style={{color: "red"}}>{err}</span>
+            }) : error.length  == 1 ? <span style={{color: "red"}}>{error[0]}</span>: null}
             {showAlbumForm ? 
                 <form onSubmit={handleAlbumCreate}>
                     <div>
