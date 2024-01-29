@@ -1,7 +1,75 @@
+/** @jsxImportSource @emotion/react */
+
 import React, { useContext, useState } from 'react';
 import UserContext from './context/UserContext';
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
+import { css } from '@emotion/react';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  flex-direction: column;
+  background-color: #fffff;
+`;
+
+const Form = styled.form`
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background: black;
+  min-width: 300px;
+`;
+
+const Label = styled.div`
+  color: white;
+  margin-top: 10px;
+`;
+
+const Input = styled.input`
+  margin: 5px 0 15px;
+  padding: 10px;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  display: block;
+  width: calc(100% - 22px);
+`;
+
+const Button = styled.button`
+  background-color: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+  &:hover {
+    background-color: #0056b3;
+  }
+`;
+
+const ToggleButton = styled(Button)`
+  background-color: transparent;
+//   color: #007bff;
+  padding: 0;
+  font-size: 15px;
+  margin: 0 0 15px;
+  &:hover {
+    background-color: transparent;
+    text-decoration: underline;
+  }
+`;
+
+const ErrorMsg = styled.p`
+  color: red;
+  margin-top: 10px;
+`;
 
 function Login(){
 
@@ -42,34 +110,33 @@ function Login(){
 
 
     return(
-        <div>
-            Login
-            <br/>
-            <br/>
-            <form onSubmit={handleLogin}>
-                username: 
-                <input
-                    style={{marginLeft: "5px"}}
+        <Container>
+            <Label css={css`
+                font-size: 25px;
+                font-weight: bold;
+                margin-bottom: 20px;
+                display: block
+            `}>Login</Label>
+            <Form onSubmit={handleLogin}>
+                <Label>username:</Label>
+                <Input
                     type="text"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                 />
-                <br/>
-                password:
-                <input
-                    style={{marginLeft: "6px"}}
+                <Label>password:</Label>
+                <Input
                     type={showPassword ? "text" : "password"}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
-                <button style={{fontSize: "10px", marginLeft: "5px"}} type="button" onClick={() => setShowPassword((prev) => !prev)}>
-                    {showPassword ? "🚫👁️" : "👁️"}
-                </button>
-                <br/>
-                <button type="submit">Login</button>
-                {error ? <p style={{color: "red"}}>{error}</p> : null}
-            </form>
-        </div>
+                <ToggleButton type="button" onClick={() => setShowPassword((prev) => !prev)}>
+                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </ToggleButton>
+                <Button type="submit">Login</Button>
+                {error && <ErrorMsg>{error}</ErrorMsg>}
+            </Form>
+        </Container>
     )
 }
 
